@@ -58,6 +58,7 @@
                     </g>
                 </svg>
             </div>
+            <weditor />
             <div class="fitem" v-for="(item, index) in pform" :key="index">
                 <div class="row">
                     <div class="label">{{ item.label }}</div>
@@ -71,6 +72,7 @@
 </template>
 
 <script setup lang="ts">
+    import weditor from "@/components/editor.vue";
     import { service } from "@/http/service";
     import { toast } from "@/common/toast";
     import { useRouter } from "@/common/route";

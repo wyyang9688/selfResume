@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Editor: typeof import('./src/components/editor.vue')['default']
     EditSec: typeof import('./src/components/editSec.vue')['default']
     Feedquery: typeof import('./src/components/feedquery.vue')['default']
     Gc: typeof import('./src/components/gc.vue')['default']
