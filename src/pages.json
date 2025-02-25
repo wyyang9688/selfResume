@@ -1,0 +1,175 @@
+{
+	"easycom": {
+		// 注意一定要放在custom里，否则无效，https://ask.dcloud.net.cn/question/131175
+		"custom": {
+			"^u--(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+		}
+	},
+	"pageCopy": [{
+		"path": "pages/detail/img-detail",
+		"style": {
+			"navigationBarTitleText": "作品详情",
+
+		}
+	}],
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
+		{
+			"path": "pages/cjyj/cjyj",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+				// "navigationBarBackgroundColor": "#f8f8f8"
+			}
+		}, {
+			"path": "pages/resume/resume",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+				// "navigationBarBackgroundColor": "#f8f8f8"
+			}
+		}, {
+			"path": "pages/edit/edit",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+				// "navigationBarBackgroundColor": "#f8f8f8"
+			}
+		}, {
+			"path": "pages/home/home-index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+				// "navigationBarBackgroundColor": "#f8f8f8"
+			}
+		},
+
+		{
+			"path": "pages/my/my-index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/tjwx/tjwx",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/wdyj/wdyj",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/wdwx/wdwx",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/my/feedback",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/my/recharge",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/wdwx/wdwx-detail",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/tjwx/ydwx",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/tjwx/wxzs",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
+			"path": "pages/my/rechargeDetail",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+
+	],
+	"tabBar": {
+		"color": "#FFFFFF",
+		"selectedColor": "#fff",
+		"borderStyle": "white",
+		"backgroundColor": "transparent",
+		"position": "bottom",
+		"list": [{
+				"pagePath": "pages/home/home-index",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/cjyj/cjyj",
+				"text": "创建研究"
+			},
+			{
+				"pagePath": "pages/wdyj/wdyj",
+				"text": "我的研究"
+			},
+			{
+				"pagePath": "pages/wdwx/wdwx",
+				"text": "我的文献"
+			},
+			{
+				"pagePath": "pages/my/my-index",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "如影文献",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	}
+}
