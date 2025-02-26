@@ -161,11 +161,24 @@
                     </div>
                     <div class="val" v-if="item.type == 'options'">
                         <div class="selectBox inputBox vcenter">
-                            <selectPick
+                            <!-- <selectPick
                                 :options="[item?.op]"
                                 :placehodle="item.placeholder"
                                 @confirm="selectChange($event, item)"
-                            />
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
                         </div>
                     </div>
                     <div class="val" v-if="item.type == 'editor'">
@@ -220,11 +233,24 @@
                     </div>
                     <div class="val" v-if="item.type == 'options'">
                         <div class="selectBox inputBox vcenter">
-                            <selectPick
+                            <!-- <selectPick
                                 :options="[item?.op]"
                                 :placehodle="item.placeholder"
                                 @confirm="selectChange($event, item)"
-                            />
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
                         </div>
                     </div>
                     <div class="val" v-if="item.type == 'editor'">
@@ -279,11 +305,24 @@
                     </div>
                     <div class="val" v-if="item.type == 'options'">
                         <div class="selectBox inputBox vcenter">
-                            <selectPick
+                            <!-- <selectPick
                                 :options="[item?.op]"
                                 :placehodle="item.placeholder"
                                 @confirm="selectChange($event, item)"
-                            />
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
                         </div>
                     </div>
                     <div class="val" v-if="item.type == 'editor'">
@@ -325,11 +364,24 @@
                     </div>
                     <div class="val" v-if="item.type == 'options'">
                         <div class="selectBox inputBox vcenter">
-                            <selectPick
+                            <!-- <selectPick
                                 :options="[item?.op]"
                                 :placehodle="item.placeholder"
                                 @confirm="selectChange($event, item)"
-                            />
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
                         </div>
                     </div>
                     <div class="val" v-if="item.type == 'editor'">
@@ -343,7 +395,7 @@
                 </div>
             </div>
         </div>
-        <div class="person" v-if="showKey == 'certifications'">
+        <div class="person" v-if="showKey == 'certification'">
             <div class="fitem" v-for="(item, index) in cform" :key="index">
                 <div class="row">
                     <div class="label">{{ item.label }}</div>
@@ -371,11 +423,24 @@
                     </div>
                     <div class="val" v-if="item.type == 'options'">
                         <div class="selectBox inputBox vcenter">
-                            <selectPick
+                            <!-- <selectPick
                                 :options="[item?.op]"
                                 :placehodle="item.placeholder"
                                 @confirm="selectChange($event, item)"
-                            />
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
                         </div>
                     </div>
                     <div class="val" v-if="item.type == 'editor'">
@@ -725,7 +790,7 @@
             type: "input",
             val: "",
 
-            key: "fullName",
+            key: "skillName",
             placeholder: "请输入技能名称"
         },
         // {
@@ -763,7 +828,7 @@
             ],
             val: "",
 
-            key: "fullName",
+            key: "proficiencyLevel",
             placeholder: "请选择技能等级"
         },
         // {
@@ -788,7 +853,7 @@
             type: "editor",
             val: "",
 
-            key: "fullName",
+            key: "skillKeywords",
             placeholder: "请填写技能说明"
         }
     ]);
@@ -798,7 +863,7 @@
             type: "input",
             val: "",
 
-            key: "fullName",
+            key: "certificationName",
             placeholder: "请输入证书名称"
         },
         {
@@ -806,7 +871,7 @@
             type: "input",
             val: "",
 
-            key: "fullName",
+            key: "issuingOrganization",
             placeholder: "请输入颁发机构"
         },
         // {
@@ -844,17 +909,17 @@
             type: "date",
             val: "",
 
-            key: "fullName",
+            key: "issueDate",
             placeholder: "请选择颁发日期"
         },
-        {
-            label: "发证网站",
-            type: "input",
-            val: "",
+        // {
+        //     label: "发证网站",
+        //     type: "input",
+        //     val: "",
 
-            key: "fullName",
-            placeholder: "请选择颁发日期"
-        },
+        //     key: "fullName",
+        //     placeholder: "请选择颁发日期"
+        // },
         // {
         //     label: "结束时间",
         //     type: "date",
@@ -869,7 +934,7 @@
             type: "editor",
             val: "",
 
-            key: "fullName",
+            key: "description",
             placeholder: "请填写证书描述"
         }
     ]);
@@ -895,6 +960,8 @@
         obj.experienceList = obj.experienceList || [];
         obj.educationList = obj.educationList || [];
         obj.projectsList = obj.projectsList || [];
+        obj.skillsList = obj.skillsList || [];
+        obj.certificationList = obj.certificationList || [];
         if (showKey.value == "person") {
             console.log("个人信息");
             console.log(pform.value);
@@ -955,14 +1022,42 @@
                     id: id.value,
                     list: prform.value
                 });
-        } else if (showKey.value == "skill") {
+        } else if (showKey.value == "skills") {
             console.log("技能");
             console.log(sform.value);
             com.setItem("sform", sform.value);
+            let flag = true;
+            if (obj.skillsList.length) {
+                for (let v of obj.skillsList) {
+                    if (v.id == id.value) {
+                        flag = false;
+                        v.list = sform.value;
+                    }
+                }
+            }
+            if (flag)
+                obj.skillsList.push({
+                    id: id.value,
+                    list: sform.value
+                });
         } else if (showKey.value == "certification") {
             console.log("证书");
             console.log(cform.value);
             com.setItem("cform", cform.value);
+            let flag = true;
+            if (obj.certificationList.length) {
+                for (let v of obj.certificationList) {
+                    if (v.id == id.value) {
+                        flag = false;
+                        v.list = cform.value;
+                    }
+                }
+            }
+            if (flag)
+                obj.certificationList.push({
+                    id: id.value,
+                    list: cform.value
+                });
         }
         console.log(obj);
         com.setItem("jlObj", obj);
@@ -1047,6 +1142,38 @@
                     });
                 }, 1000);
             }
+        }else if (op.key == "skills") {
+            if (obj.skillsList) {
+                for (let v of obj.skillsList) {
+                    if (v.id == id.value) {
+                        sform.value = v.list;
+                    }
+                }
+                console.log(sform.value.find((v) => v.type == "editor").val);
+                setTimeout(() => {
+                    nextTick(() => {
+                        editorRef.value[0].setContent(
+                            sform.value.find((v) => v.type == "editor").val
+                        );
+                    });
+                }, 1000);
+            }
+        }else if (op.key == "certification") {
+            if (obj.certificationList) {
+                for (let v of obj.certificationList) {
+                    if (v.id == id.value) {
+                        cform.value = v.list;
+                    }
+                }
+                console.log(cform.value.find((v) => v.type == "editor").val);
+                setTimeout(() => {
+                    nextTick(() => {
+                        editorRef.value[0].setContent(
+                            cform.value.find((v) => v.type == "editor").val
+                        );
+                    });
+                }, 1000);
+            } 
         }
     });
 </script>

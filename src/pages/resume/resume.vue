@@ -1003,7 +1003,14 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del">
+                            <div class="del" @click="
+                                    delPerson(
+                                        'projects',
+                                        item.id,
+                                        ProjectsForm,
+                                        index
+                                    )
+                                ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1174,13 +1181,13 @@
                 <div
                     class="row pt"
                     style="margin-top: 16rpx"
-                    v-for="(item, index) in ExperienceForm"
+                    v-for="(item, index) in SkillsForm"
                     :key="index"
                 >
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt" style="padding-bottom: 26rpx">
                         <div class="floatBtnGroup" style="bottom: -0.856rem">
-                            <div class="edit">
+                            <div class="edit"  @click="editPerson('skills', item.id)">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1320,7 +1327,14 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del">
+                            <div class="del" @click="
+                                    delPerson(
+                                        'skills',
+                                        item.id,
+                                        SkillsForm,
+                                        index
+                                    )
+                                ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1474,20 +1488,20 @@
                 <div class="title">证书</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn">+ 添加</div>
+                    <div class="btn"  @click="editPerson('certification')">+ 添加</div>
                 </div>
             </div>
             <div class="fitem">
                 <div
                     class="row pt"
                     style="margin-top: 16rpx"
-                    v-for="(item, index) in ExperienceForm"
+                    v-for="(item, index) in CertificationForm"
                     :key="index"
                 >
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt">
                         <div class="floatBtnGroup">
-                            <div class="edit">
+                            <div class="edit"  @click="editPerson('certification', item.id)">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1627,7 +1641,14 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del">
+                            <div class="del" @click="
+                                    delPerson(
+                                        'certification',
+                                        item.id,
+                                        CertificationForm,
+                                        index
+                                    )
+                                ">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1924,6 +1945,34 @@
             epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
         }
     ]);
+    const SkillsForm = ref([
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        },
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        }
+    ]);
+    const CertificationForm = ref([
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        },
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        }
+    ]);
     const pid = ref("");
     const editPerson = (key, id = 0) => {
         //type1 新增 2编辑
@@ -1947,14 +1996,18 @@
         });
     };
     const jlId = ref("");
-    const getJLDetail = (jlId) => {
+    const getJLDetail = () => {
         // 获取简历详情
+        // com.setItem("jlObj", {
+        //         id:jlId.value
+        //     });
     };
     onLoad((op) => {
         console.log(op);
         com.setItem("editJlId", op!.id);
+        jlId.value = op!.id;
         if (op.type == "new") {
-            jlId.value = op!.id;
+            
 
             com.setItem("jlObj", {
                 id: op!.id
@@ -1967,8 +2020,9 @@
         console.log(op);
         let obj = com.getItem("jlObj");
         console.log(obj);
-        let pformAdd = obj.personItem;
-        if (pformAdd) {
+     
+        if (obj?.personItem) {
+            let pformAdd = obj.personItem;
             for (let v of pform.value) {
                 for (let vv of pformAdd) {
                     if (v.label == vv.label) {
@@ -1977,7 +2031,7 @@
                 }
             }
         }
-        if (obj.experienceList) {
+        if (obj?.experienceList) {
             ExperienceForm.value = obj.experienceList.map((v) => {
                 return {
                     ...v,
@@ -1993,8 +2047,10 @@
                     ).val
                 };
             });
+        }else{
+            ExperienceForm.value=[]
         }
-        if (obj.educationList) {
+        if (obj?.educationList) {
             EducationForm.value = obj.educationList.map((v) => {
                 return {
                     ...v,
@@ -2008,8 +2064,10 @@
                     epContent: v.list.find((vv) => vv.key == "description").val
                 };
             });
+        }else{
+            EducationForm.value=[]
         }
-        if (obj.projectsList) {
+        if (obj?.projectsList) {
             ProjectsForm.value = obj.projectsList.map((v) => {
                 return {
                     ...v,
@@ -2024,6 +2082,40 @@
             });
         } else {
             ProjectsForm.value = [];
+        }
+        if (obj?.skillsList) {
+            SkillsForm.value = obj.skillsList.map((v) => {
+                return {
+                    ...v,
+                    epName: v.list.find((vv) => vv.key == "skillName").val,
+                    // epType: v.list.find((vv) => vv.key == "role").val,
+                    // epTime:
+                    //     v.list.find((vv) => vv.key == "startDate").val +
+                    //     "-" +
+                    //     v.list.find((vv) => vv.key == "endDate").val,
+                    // epContent: v.list.find((vv) => vv.key == "description").val
+                };
+            });
+        }else{
+            SkillsForm.value=[]
+        }
+        if (obj?.certificationList) {
+            CertificationForm.value = obj.certificationList.map((v) => {
+                return {
+                    ...v,
+                    epName: v.list.find((vv) => vv.key == "certificationName")
+                        .val,
+                    epType: v.list.find((vv) => vv.key == "issuingOrganization")
+                        .val,
+                    epTime:
+                        v.list.find((vv) => vv.key == "issueDate").val 
+                        // +
+                        // "-" +
+                        // v.list.find((vv) => vv.key == "endDate").val
+                        ,
+                    epContent: v.list.find((vv) => vv.key == "description").val
+                };
+            }); 
         }
         console.log(pform);
     });
