@@ -80,11 +80,12 @@
         text-align: left;
         font-style: normal;
         width: 638rpx;
-        height: 58rpx;
+        min-height: 58rpx;
         line-height: 58rpx;
         background: #f6f6f6;
         border-radius: 7rpx;
         position: relative;
+        background-color: #f6f6fe;
         .text {
             color: #999999;
         }

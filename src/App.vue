@@ -570,4 +570,30 @@
         right: 0;
         bottom: 0;
     }
+
+    .editPage {
+        .el-input__wrapper {
+            box-shadow: none;
+            background-color: #f6f6fe;
+
+            input {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+        .myInput,
+        .el-input,
+        .el-select__wrapper {
+            width: 100% !important;
+            height: 100% !important;
+            box-shadow: none;
+            background-color: #f6f6fe;
+            input {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+    }
 </style>

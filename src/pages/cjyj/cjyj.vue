@@ -81,7 +81,7 @@
     };
     const goToResume = () => {
         push({
-            url: "/pages/resume/resume"
+            url: "/pages/resume/resume?id=123"
         });
     };
     const feedRef = ref<any>(null);

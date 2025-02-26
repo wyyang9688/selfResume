@@ -2,6 +2,23 @@ import { useAppStore } from "@/store/app-store";
 import { useRouter } from "./route";
 import { toast } from "@/common/toast";
 class Common {
+    setItem(key, data) {
+        try {
+            const jsonData = JSON.stringify(data);
+            localStorage.setItem(key, jsonData);
+        } catch (error) {
+            console.error("Error storing data in localStorage:", error);
+        }
+    }
+    getItem(key) {
+        try {
+            const jsonData = localStorage.getItem(key);
+            return jsonData ? JSON.parse(jsonData) : null;
+        } catch (error) {
+            console.error("Error retrieving data from localStorage:", error);
+            return null;
+        }
+    }
     sendMsg = (key: any, op: object = {}) => {
         try {
             my.postMessage({ key, ...op });

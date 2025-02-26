@@ -165,7 +165,7 @@
         <div class="section" style="margin-top: 48rpx">
             <div class="titleBox">
                 <div class="title">基本信息</div>
-                <div class="rt" @click="editPerson">+ 编辑</div>
+                <div class="rt" @click="editPerson('person')">+ 编辑</div>
             </div>
             <div class="fitem" v-for="(item, index) in pform" :key="index">
                 <div class="row">
@@ -181,7 +181,9 @@
                 <div class="title">工作经历</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn">+ 添加</div>
+                    <div class="btn" @click="editPerson('experience')">
+                        + 添加
+                    </div>
                 </div>
             </div>
             <div class="fitem">
@@ -194,7 +196,10 @@
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt">
                         <div class="floatBtnGroup">
-                            <div class="edit">
+                            <div
+                                class="edit"
+                                @click="editPerson('experience', item.id)"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -334,7 +339,17 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del">
+                            <div
+                                class="del"
+                                @click="
+                                    delPerson(
+                                        'experience',
+                                        item.id,
+                                        ExperienceForm,
+                                        index
+                                    )
+                                "
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -498,20 +513,25 @@
                 <div class="title">教育经历</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn">+ 添加</div>
+                    <div class="btn" @click="editPerson('education')">
+                        + 添加
+                    </div>
                 </div>
             </div>
             <div class="fitem">
                 <div
                     class="row pt"
                     style="margin-top: 16rpx"
-                    v-for="(item, index) in ExperienceForm"
+                    v-for="(item, index) in EducationForm"
                     :key="index"
                 >
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt">
                         <div class="floatBtnGroup">
-                            <div class="edit">
+                            <div
+                                class="edit"
+                                @click="editPerson('experience', item.id)"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -651,7 +671,17 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del">
+                            <div
+                                class="del"
+                                @click="
+                                    delPerson(
+                                        'experience',
+                                        item.id,
+                                        ExperienceForm,
+                                        index
+                                    )
+                                "
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1778,7 +1808,7 @@
     import { onLoad, onReachBottom, onShow } from "@dcloudio/uni-app";
     const appStore = useAppStore();
     const userStore = useUserStore();
-    const { push, replace, back } = useRouter();
+    const { push, replace, back, tab } = useRouter();
     const feedRef = ref<any>(null);
 
     const resumeData = ref<any>({
@@ -1861,19 +1891,107 @@
             epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
         }
     ]);
+    const EducationForm = ref([
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        },
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        }
+    ]);
     const pid = ref("");
-    const editPerson = () => {
+    const editPerson = (key, id = 0) => {
+        //type1 新增 2编辑
         push({
             url:
-                "/pages/edit/edit?key=person&pid=" +
-                pid.value +
+                "/pages/edit/edit?key=" +
+                key +
                 "&id=" +
-                pid.value
+                id +
+                "&jlId=" +
+                jlId.value
         });
     };
-    const exit = () => {
-        back();
+    const delPerson = (key, id, list, index) => {
+        //删除key类型的ID项目
+        list.splice(index, 1);
     };
+    const exit = () => {
+        tab({
+            url: "/pages/cjyj/cjyj"
+        });
+    };
+    const jlId = ref("");
+    const getJLDetail = (jlId) => {
+        // 获取简历详情
+    };
+    onLoad((op) => {
+        console.log(op);
+        com.setItem("editJlId", op!.id);
+        if (op.type == "new") {
+            jlId.value = op!.id;
+
+            com.setItem("jlObj", {
+                id: op!.id
+            });
+        } else {
+            getJLDetail(op.id);
+        }
+    });
+    onShow((op) => {
+        console.log(op);
+        let obj = com.getItem("jlObj");
+        console.log(obj);
+        let pformAdd = obj.personItem;
+        if (pformAdd) {
+            for (let v of pform.value) {
+                for (let vv of pformAdd) {
+                    if (v.label == vv.label) {
+                        v.val = vv.val;
+                    }
+                }
+            }
+        }
+        if (obj.experienceList) {
+            ExperienceForm.value = obj.experienceList.map((v) => {
+                return {
+                    ...v,
+                    epName: v.experience.find((vv) => vv.key == "companyName")
+                        .val,
+                    epType: v.experience.find((vv) => vv.key == "jobTitle").val,
+                    epTime:
+                        v.experience.find((vv) => vv.key == "startDate").val +
+                        "-" +
+                        v.experience.find((vv) => vv.key == "endDate").val,
+                    epContent: v.experience.find(
+                        (vv) => vv.key == "description"
+                    ).val
+                };
+            });
+        }
+        if (obj.educationList) {
+            EducationForm.value = obj.educationList.map((v) => {
+                return {
+                    ...v,
+                    epName: v.list.find((vv) => vv.key == "institutionName")
+                        .val,
+                    epType: v.list.find((vv) => vv.key == "major").val,
+                    epTime:
+                        v.list.find((vv) => vv.key == "startDate").val +
+                        "-" +
+                        v.list.find((vv) => vv.key == "endDate").val,
+                    epContent: v.list.find((vv) => vv.key == "description").val
+                };
+            });
+        }
+        console.log(pform);
+    });
     onMounted(() => {
         //
     });

@@ -58,20 +58,363 @@
                     </g>
                 </svg>
             </div>
-            <weditor />
+            <!-- <weditor /> -->
             <div class="fitem" v-for="(item, index) in pform" :key="index">
                 <div class="row">
                     <div class="label">{{ item.label }}</div>
-                    <div class="val">
-                        {{ item.val || item.placeholder }}
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                v-model="item.val"
+                                value-format="YYYY.MM.DD"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div
+                            class="selectBox inputBox vcenter"
+                            style="padding: 0"
+                        >
+                            <!-- <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            /> -->
+                            <el-select
+                                class="myInput"
+                                v-model="item.val"
+                                clearable
+                                :placeholder="item.placeholder"
+                            >
+                                <el-option
+                                    v-for="item in item?.op"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="person" v-if="showKey == 'experience'">
+            <div
+                class="msg mt10"
+                style="
+                    font-family: Roboto;
+                    font-size: 28rpx;
+                    font-weight: normal;
+                    line-height: 42rpx;
+                    letter-spacing: 0px;
+                    color: #6b7280;
+                "
+            >
+                从最近一份工作经历写起
+            </div>
+            <div class="fitem" v-for="(item, index) in exform" :key="index">
+                <div class="row">
+                    <div class="label">{{ item.label }}</div>
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                value-format="YYYY.MM.DD"
+                                v-model="item.val"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div class="selectBox inputBox vcenter">
+                            <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="person" v-if="showKey == 'education'">
+            <div
+                class="msg mt10"
+                style="
+                    font-family: Roboto;
+                    font-size: 28rpx;
+                    font-weight: normal;
+                    line-height: 42rpx;
+                    letter-spacing: 0px;
+                    color: #6b7280;
+                "
+            >
+                从最高学历写起
+            </div>
+            <div class="fitem" v-for="(item, index) in eform" :key="index">
+                <div class="row">
+                    <div class="label">{{ item.label }}</div>
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                value-format="YYYY.MM.DD"
+                                v-model="item.val"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div class="selectBox inputBox vcenter">
+                            <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="person" v-if="showKey == 'projects'">
+            <!-- <div
+                class="msg mt10"
+                style="
+                    font-family: Roboto;
+                    font-size: 28rpx;
+                    font-weight: normal;
+                    line-height: 42rpx;
+                    letter-spacing: 0px;
+                    color: #6b7280;
+                "
+            >
+                从最高学历写起
+            </div> -->
+            <div class="fitem" v-for="(item, index) in prform" :key="index">
+                <div class="row">
+                    <div class="label">{{ item.label }}</div>
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                value-format="YYYY.MM.DD"
+                                v-model="item.val"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div class="selectBox inputBox vcenter">
+                            <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="person" v-if="showKey == 'skills'">
+            <div class="fitem" v-for="(item, index) in sform" :key="index">
+                <div class="row">
+                    <div class="label">{{ item.label }}</div>
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                value-format="YYYY.MM.DD"
+                                v-model="item.val"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div class="selectBox inputBox vcenter">
+                            <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="person" v-if="showKey == 'certifications'">
+            <div class="fitem" v-for="(item, index) in cform" :key="index">
+                <div class="row">
+                    <div class="label">{{ item.label }}</div>
+                    <div class="val" v-if="item.type == 'input'">
+                        <div class="inputBox">
+                            <input
+                                class="myInput"
+                                v-model="item.val"
+                                :placeholder="item.placeholder"
+                                placeholder-class="input-placeholder"
+                                @input="inputChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'date'">
+                        <div class="inputBox dateBox" style="padding: 0">
+                            <el-date-picker
+                                class="myInput"
+                                value-format="YYYY.MM.DD"
+                                v-model="item.val"
+                                type="date"
+                                placeholder="选择日期"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'options'">
+                        <div class="selectBox inputBox vcenter">
+                            <selectPick
+                                :options="[item?.op]"
+                                :placehodle="item.placeholder"
+                                @confirm="selectChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                    <div class="val" v-if="item.type == 'editor'">
+                        <div class="editorBox">
+                            <weditor
+                                ref="editorRef"
+                                @editorChange="editorChange($event, item)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="btn mt50"
+            @click="saveEdit"
+            style="
+                width: 686rpx;
+                height: 88rpx;
+                border-radius: 8rpx;
+                opacity: 1;
+                background: #4f46e5;
+                font-family: Roboto;
+                font-size: 32rpx;
+                font-weight: 500;
+                line-height: 88rpx;
+                text-align: center;
+                letter-spacing: 0px;
+                color: #ffffff;
+            "
+        >
+            保存
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+    import selectPick from "@/components/selectPick.vue";
     import weditor from "@/components/editor.vue";
     import { service } from "@/http/service";
     import { toast } from "@/common/toast";
@@ -84,42 +427,64 @@
     const appStore = useAppStore();
     const userStore = useUserStore();
     const { push, replace, back } = useRouter();
-    const showKey = ref("person");
+    const showKey = ref("experience");
+    const id = ref();
+    const jlId = ref();
     const pform = ref([
         {
             label: "姓名",
             type: "input",
             val: "",
+            key: "fullName",
             placeholder: "请输入姓名"
         },
         {
             label: "性别",
-            type: "input",
+            type: "options",
+            op: [
+                {
+                    label: "男",
+                    value: "男"
+                },
+                {
+                    label: "女",
+                    value: "女"
+                }
+            ],
             val: "",
-            placeholder: "请输入性别"
+
+            key: "gender",
+            placeholder: "请选择性别"
         },
         {
             label: "出生日期",
-            type: "input",
+            type: "date",
             val: "",
-            placeholder: "请输入出生日期"
+
+            key: "dateOfBirth",
+            placeholder: "请选择出生日期"
         },
         {
             label: "联系电话",
             type: "input",
             val: "",
+
+            key: "phone",
             placeholder: "请输入联系电话"
         },
         {
             label: "电子邮箱",
             type: "input",
             val: "",
+            key: "email ",
             placeholder: "请输入电子邮箱"
         },
         {
             label: "期望职位",
             type: "input",
             val: "",
+
+            key: "jobTitle",
             placeholder: "请输入期望职位"
         },
 
@@ -127,18 +492,22 @@
             label: "期望工作城市",
             type: "input",
             val: "",
+            key: "desiredWorkCity",
             placeholder: "请输入期望工作城市"
         },
         {
             label: "薪资要求",
             type: "input",
             val: "",
+
+            key: "salaryExpectation",
             placeholder: "请输入薪资要求"
         },
         {
             label: "求职状态",
             type: "input",
             val: "",
+            key: "jobSeekingStatus",
             placeholder: "请输入求职状态"
         },
 
@@ -146,6 +515,7 @@
             label: "政治面貌",
             type: "input",
             val: "",
+            key: "politicalAffiliation",
             placeholder: "请输入政治面貌"
         },
 
@@ -153,15 +523,559 @@
             label: "自我总结",
             type: "editor",
             val: "",
+
+            key: "Summary",
             placeholder: "请输入自我总结"
         }
     ]);
+    const eform = ref([
+        {
+            label: "学校名称",
+            type: "input",
+            val: "",
+
+            key: "institutionName",
+            placeholder: "请输入学校名称"
+        },
+        {
+            label: "学位",
+            type: "input",
+            val: "",
+
+            key: "degree",
+            placeholder: "请输入学位"
+        },
+        {
+            label: "专业",
+            type: "input",
+            val: "",
+
+            key: "major",
+            placeholder: "请输入学位"
+        },
+        // {
+        //     label: "学历",
+        //     type: "options",
+        //     op: [
+        //         {
+        //             label: "男",
+        //             value: "男"
+        //         },
+        //         {
+        //             label: "女",
+        //             value: "女"
+        //         }
+        //     ],
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择性别"
+        // },
+        {
+            label: "开始时间",
+            type: "date",
+            val: "",
+
+            key: "startDate",
+            placeholder: "请选择开始时间"
+        },
+        {
+            label: "结束时间",
+            type: "date",
+            val: "",
+
+            key: "endDate",
+            placeholder: "请选择结束时间"
+        },
+
+        {
+            label: "在校经历",
+            type: "editor",
+            val: "",
+
+            key: "description",
+            placeholder: "请填写在校经历"
+        }
+    ]);
+    const exform = ref([
+        {
+            label: "公司名称",
+            type: "input",
+            val: "",
+
+            key: "companyName",
+            placeholder: "请输入公司名称"
+        },
+        {
+            label: "职位",
+            type: "input",
+            val: "",
+
+            key: "jobTitle",
+            placeholder: "请输入职位"
+        },
+        // {
+        //     label: "学历",
+        //     type: "options",
+        //     op: [
+        //         {
+        //             label: "男",
+        //             value: "男"
+        //         },
+        //         {
+        //             label: "女",
+        //             value: "女"
+        //         }
+        //     ],
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择性别"
+        // },
+        {
+            label: "开始时间",
+            type: "date",
+            val: "",
+
+            key: "startDate",
+            placeholder: "请选择开始时间"
+        },
+        {
+            label: "结束时间",
+            type: "date",
+            val: "",
+
+            key: "endDate",
+            placeholder: "请选择结束时间"
+        },
+
+        {
+            label: "工作内容",
+            type: "editor",
+            val: "",
+
+            key: "description",
+            placeholder: "请填写工作内容"
+        }
+    ]);
+    const prform = ref([
+        {
+            label: "项目名称",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请输入项目名称"
+        },
+        {
+            label: "担任角色",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请输入担任角色"
+        },
+        // {
+        //     label: "学历",
+        //     type: "options",
+        //     op: [
+        //         {
+        //             label: "男",
+        //             value: "男"
+        //         },
+        //         {
+        //             label: "女",
+        //             value: "女"
+        //         }
+        //     ],
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择性别"
+        // },
+        {
+            label: "开始时间",
+            type: "date",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请选择开始时间"
+        },
+        {
+            label: "结束时间",
+            type: "date",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请选择结束时间"
+        },
+
+        {
+            label: "项目内容",
+            type: "editor",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请填写项目内容"
+        }
+    ]);
+    const sform = ref([
+        {
+            label: "技能名称",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请输入技能名称"
+        },
+        // {
+        //     label: "担任角色",
+        //     type: "input",
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请输入担任角色"
+        // },
+        {
+            label: "熟练程度（5为最高等级）",
+            type: "options",
+            op: [
+                {
+                    label: "1",
+                    value: "1"
+                },
+                {
+                    label: "2",
+                    value: "2"
+                },
+                {
+                    label: "3",
+                    value: "3"
+                },
+                {
+                    label: "4",
+                    value: "4"
+                },
+                {
+                    label: "5",
+                    value: "5"
+                }
+            ],
+            val: "",
+
+            key: "fullName",
+            placeholder: "请选择技能等级"
+        },
+        // {
+        //     label: "开始时间",
+        //     type: "date",
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择开始时间"
+        // },
+        // {
+        //     label: "结束时间",
+        //     type: "date",
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择结束时间"
+        // },
+
+        {
+            label: "技能说明",
+            type: "editor",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请填写技能说明"
+        }
+    ]);
+    const cform = ref([
+        {
+            label: "证书名称",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请输入证书名称"
+        },
+        {
+            label: "颁发机构",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请输入颁发机构"
+        },
+        // {
+        //     label: "熟练程度（5为最高等级）",
+        //     type: "options",
+        //     op: [
+        //         {
+        //             label: "1",
+        //             value: "1"
+        //         },
+        //         {
+        //             label: "2",
+        //             value: "2"
+        //         },
+        //         {
+        //             label: "3",
+        //             value: "3"
+        //         },
+        //         {
+        //             label: "4",
+        //             value: "4"
+        //         },
+        //         {
+        //             label: "5",
+        //             value: "5"
+        //         }
+        //     ],
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择技能等级"
+        // },
+        {
+            label: "颁发日期",
+            type: "date",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请选择颁发日期"
+        },
+        {
+            label: "发证网站",
+            type: "input",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请选择颁发日期"
+        },
+        // {
+        //     label: "结束时间",
+        //     type: "date",
+        //     val: "",
+        //
+        // key:'fullName',
+        // placeholder: "请选择结束时间"
+        // },
+
+        {
+            label: "证书描述",
+            type: "editor",
+            val: "",
+
+            key: "fullName",
+            placeholder: "请填写证书描述"
+        }
+    ]);
+    const editorChange = (e, item) => {
+        console.log(item);
+        console.log(e);
+        item.val = e.detail.html;
+        item.text = e.detail.text;
+    };
+    const inputChange = (e, item) => {
+        console.log(item);
+        console.log(e.detail);
+    };
+    const selectChange = (e, item) => {
+        console.log(item);
+        console.log(e);
+        item.val = e.value;
+    };
+    const editorRef = ref();
+    const saveEdit = () => {
+        console.log("saveEdit");
+        let obj = com.getItem("jlObj");
+        obj.experienceList = obj.experienceList || [];
+        obj.educationList = obj.educationList || [];
+        if (showKey.value == "person") {
+            console.log("个人信息");
+            console.log(pform.value);
+            obj.personItem = pform.value;
+            // com.setItem("pform", pform.value);
+        } else if (showKey.value == "education") {
+            console.log("教育经历");
+            console.log(eform.value);
+            com.setItem("eform", eform.value);
+            let flag = true;
+            if (obj.educationList.length) {
+                for (let v of obj.educationList) {
+                    if (v.id == id.value) {
+                        flag = false;
+                        v.list = eform.value;
+                    }
+                }
+            }
+            if (flag)
+                obj.educationList.push({
+                    id: id.value,
+                    list: eform.value
+                });
+        } else if (showKey.value == "experience") {
+            console.log("工作经历");
+            console.log(exform.value);
+            let flag = true;
+            if (obj.experienceList.length) {
+                for (let v of obj.experienceList) {
+                    if (v.id == id.value) {
+                        flag = false;
+                        v.experience = exform.value;
+                    }
+                }
+            }
+            if (flag)
+                obj.experienceList.push({
+                    id: id.value,
+                    experience: exform.value
+                });
+
+            com.setItem("exform", exform.value);
+        } else if (showKey.value == "project") {
+            console.log("项目经历");
+            console.log(prform.value);
+            com.setItem("prform", prform.value);
+        } else if (showKey.value == "skill") {
+            console.log("技能");
+            console.log(sform.value);
+            com.setItem("sform", sform.value);
+        } else if (showKey.value == "certification") {
+            console.log("证书");
+            console.log(cform.value);
+            com.setItem("cform", cform.value);
+        }
+        console.log(obj);
+        com.setItem("jlObj", obj);
+    };
     onLoad((op) => {
         //
         console.log(op);
         if (op?.key) {
             showKey.value = op.key;
         }
+        let obj = com.getItem("jlObj");
+        jlId.value = com.getItem("jlObj").id;
+        id.value = op?.id || "";
+        if (op?.key == "person") {
+            let pformAdd = com.getItem("pform");
+
+            console.log(pformAdd);
+            if (pformAdd) {
+                for (let v of pform.value) {
+                    for (let vv of pformAdd) {
+                        if (v.label == vv.label) {
+                            v.val = vv.val;
+                            if (v.type == "editor") {
+                                setTimeout(() => {
+                                    nextTick(() => {
+                                        // console.log(editorRef.value);
+                                        // console.log(editorRef.value[0]);
+                                        editorRef.value[0].setContent(vv.val);
+                                    });
+                                }, 1000);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (op.key == "experience") {
+            if (obj.experienceList) {
+                for (let v of obj.experienceList) {
+                    if (v.id == id.value) {
+                        exform.value = v.experience;
+                    }
+                }
+                console.log(exform.value.find((v) => v.type == "editor").val);
+                setTimeout(() => {
+                    nextTick(() => {
+                        editorRef.value[0].setContent(
+                            exform.value.find((v) => v.type == "editor").val
+                        );
+                    });
+                }, 1000);
+                //     exform.value = obj.experienceList.map((v) => {
+                //     return {
+                //         ...v,
+                //         epName: v.experience.find((vv) => vv.key == "companyName")
+                //             .val,
+                //         epType: v.experience.find((vv) => vv.key == "jobTitle").val,
+                //         epTime:
+                //             v.experience.find((vv) => vv.key == "startDate").val +
+                //             "-" +
+                //             v.experience.find((vv) => vv.key == "endDate").val,
+                //         epContent: v.experience.find(
+                //             (vv) => vv.key == "description"
+                //         ).val
+                //     };
+                // });
+            }
+        }
     });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    .editPage {
+        padding: 0 32rpx;
+        padding-bottom: 30px;
+        .person {
+            .fitem {
+                .row {
+                    margin-top: 32rpx;
+                    .label {
+                        font-family: Roboto;
+                        font-size: 28rpx;
+                        font-weight: normal;
+                        line-height: 40rpx;
+                        letter-spacing: 0px;
+                        color: #4b5563;
+                    }
+                    .val {
+                        margin-top: 14rpx;
+                        .inputBox {
+                            width: 686rpx;
+                            height: 96rpx;
+                            line-height: 96rpx;
+                            /* 自动布局 */
+                            display: flex;
+                            flex-direction: column;
+                            padding: 0rpx 32rpx;
+                            gap: 0rpx 20rpx;
+                            flex-wrap: wrap;
+                            align-content: flex-start;
+                            border-radius: 16rpx;
+                            opacity: 1;
+                            background: rgba(79, 70, 229, 0.05);
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>
+<style lang="scss">
+    .editPage {
+        .el-input__wrapper {
+            box-shadow: none;
+            background-color: #f6f6fe;
+            input {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+        .myInput {
+            width: 100%;
+            height: 100%;
+
+            input {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+    }
+</style>
