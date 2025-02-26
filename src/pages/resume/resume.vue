@@ -530,7 +530,7 @@
                         <div class="floatBtnGroup">
                             <div
                                 class="edit"
-                                @click="editPerson('experience', item.id)"
+                                @click="editPerson('education', item.id)"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -675,9 +675,9 @@
                                 class="del"
                                 @click="
                                     delPerson(
-                                        'experience',
+                                        'education',
                                         item.id,
-                                        ExperienceForm,
+                                        EducationForm,
                                         index
                                     )
                                 "
@@ -845,20 +845,25 @@
                 <div class="title">项目经验</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn">+ 添加</div>
+                    <div class="btn" @click="editPerson('projects')">
+                        + 添加
+                    </div>
                 </div>
             </div>
             <div class="fitem">
                 <div
                     class="row pt"
                     style="margin-top: 16rpx"
-                    v-for="(item, index) in ExperienceForm"
+                    v-for="(item, index) in ProjectsForm"
                     :key="index"
                 >
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt">
                         <div class="floatBtnGroup">
-                            <div class="edit">
+                            <div
+                                class="edit"
+                                @click="editPerson('projects', item.id)"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1162,7 +1167,7 @@
                 <div class="title">技能</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn">+ 添加</div>
+                    <div class="btn" @click="editPerson('skills')">+ 添加</div>
                 </div>
             </div>
             <div class="fitem">
@@ -1905,6 +1910,20 @@
             epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
         }
     ]);
+    const ProjectsForm = ref([
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        },
+        {
+            epName: "企业级数据分析平台",
+            epType: "数据分析",
+            epTime: "2022-09-01-2023-09-01",
+            epContent: "负责项目的需求分析、设计、开发、测试、部署和维护。"
+        }
+    ]);
     const pid = ref("");
     const editPerson = (key, id = 0) => {
         //type1 新增 2编辑
@@ -1989,6 +2008,22 @@
                     epContent: v.list.find((vv) => vv.key == "description").val
                 };
             });
+        }
+        if (obj.projectsList) {
+            ProjectsForm.value = obj.projectsList.map((v) => {
+                return {
+                    ...v,
+                    epName: v.list.find((vv) => vv.key == "projectName").val,
+                    epType: v.list.find((vv) => vv.key == "role").val,
+                    epTime:
+                        v.list.find((vv) => vv.key == "startDate").val +
+                        "-" +
+                        v.list.find((vv) => vv.key == "endDate").val,
+                    epContent: v.list.find((vv) => vv.key == "description").val
+                };
+            });
+        } else {
+            ProjectsForm.value = [];
         }
         console.log(pform);
     });

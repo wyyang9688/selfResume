@@ -664,7 +664,7 @@
             type: "input",
             val: "",
 
-            key: "fullName",
+            key: "projectName",
             placeholder: "请输入项目名称"
         },
         {
@@ -672,7 +672,7 @@
             type: "input",
             val: "",
 
-            key: "fullName",
+            key: "role",
             placeholder: "请输入担任角色"
         },
         // {
@@ -698,7 +698,7 @@
             type: "date",
             val: "",
 
-            key: "fullName",
+            key: "startDate",
             placeholder: "请选择开始时间"
         },
         {
@@ -706,7 +706,7 @@
             type: "date",
             val: "",
 
-            key: "fullName",
+            key: "endDate",
             placeholder: "请选择结束时间"
         },
 
@@ -715,7 +715,7 @@
             type: "editor",
             val: "",
 
-            key: "fullName",
+            key: "description",
             placeholder: "请填写项目内容"
         }
     ]);
@@ -894,6 +894,7 @@
         let obj = com.getItem("jlObj");
         obj.experienceList = obj.experienceList || [];
         obj.educationList = obj.educationList || [];
+        obj.projectsList = obj.projectsList || [];
         if (showKey.value == "person") {
             console.log("个人信息");
             console.log(pform.value);
@@ -936,10 +937,24 @@
                 });
 
             com.setItem("exform", exform.value);
-        } else if (showKey.value == "project") {
+        } else if (showKey.value == "projects") {
             console.log("项目经历");
             console.log(prform.value);
             com.setItem("prform", prform.value);
+            let flag = true;
+            if (obj.projectsList.length) {
+                for (let v of obj.projectsList) {
+                    if (v.id == id.value) {
+                        flag = false;
+                        v.list = prform.value;
+                    }
+                }
+            }
+            if (flag)
+                obj.projectsList.push({
+                    id: id.value,
+                    list: prform.value
+                });
         } else if (showKey.value == "skill") {
             console.log("技能");
             console.log(sform.value);
@@ -959,6 +974,7 @@
             showKey.value = op.key;
         }
         let obj = com.getItem("jlObj");
+        console.log(obj);
         jlId.value = com.getItem("jlObj").id;
         id.value = op?.id || "";
         if (op?.key == "person") {
@@ -998,21 +1014,38 @@
                         );
                     });
                 }, 1000);
-                //     exform.value = obj.experienceList.map((v) => {
-                //     return {
-                //         ...v,
-                //         epName: v.experience.find((vv) => vv.key == "companyName")
-                //             .val,
-                //         epType: v.experience.find((vv) => vv.key == "jobTitle").val,
-                //         epTime:
-                //             v.experience.find((vv) => vv.key == "startDate").val +
-                //             "-" +
-                //             v.experience.find((vv) => vv.key == "endDate").val,
-                //         epContent: v.experience.find(
-                //             (vv) => vv.key == "description"
-                //         ).val
-                //     };
-                // });
+            }
+        } else if (op.key == "education") {
+            if (obj.educationList) {
+                for (let v of obj.educationList) {
+                    if (v.id == id.value) {
+                        eform.value = v.list;
+                    }
+                }
+                console.log(eform.value.find((v) => v.type == "editor").val);
+                setTimeout(() => {
+                    nextTick(() => {
+                        editorRef.value[0].setContent(
+                            eform.value.find((v) => v.type == "editor").val
+                        );
+                    });
+                }, 1000);
+            }
+        } else if (op.key == "projects") {
+            if (obj.projectsList) {
+                for (let v of obj.projectsList) {
+                    if (v.id == id.value) {
+                        prform.value = v.list;
+                    }
+                }
+                console.log(prform.value.find((v) => v.type == "editor").val);
+                setTimeout(() => {
+                    nextTick(() => {
+                        editorRef.value[0].setContent(
+                            prform.value.find((v) => v.type == "editor").val
+                        );
+                    });
+                }, 1000);
             }
         }
     });
