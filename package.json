@@ -55,6 +55,7 @@
         "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
         "type-check": "vue-tsc --noEmit",
         "prepare": "husky",
+        "postinstall": "weapp-tw patch",
         "lint:lint-staged": "lint-staged"
     },
     "dependencies": {
@@ -110,6 +111,7 @@
         "@uview-plus/types": "^3.2.5",
         "@vue/runtime-core": "^3.3.11",
         "@vue/tsconfig": "^0.1.3",
+        "autoprefixer": "^10.4.20",
         "dotenv": "^16.4.5",
         "eslint": "^9.1.1",
         "eslint-plugin-vue": "^9.25.0",
@@ -117,14 +119,17 @@
         "globals": "^15.0.0",
         "husky": "^9.0.11",
         "lint-staged": "^15.2.2",
+        "postcss": "^8.5.3",
         "prettier": "^3.2.5",
         "sass": "^1.75.0",
         "sass-loader": "10",
+        "tailwindcss": "^3.4.17",
         "typescript": "^4.9.5",
         "typescript-eslint": "^7.7.1",
         "unplugin-vue-components": "^0.27.4",
         "vite": "4.3.5",
-        "vue-tsc": "^1.0.24"
+        "vue-tsc": "^1.0.24",
+        "weapp-tailwindcss": "^4.0.8"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [

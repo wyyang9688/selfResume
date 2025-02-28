@@ -26,7 +26,13 @@
             <div class="center">
                 <div class="btn center" @click="goToResume">开始创建简历</div>
             </div>
-
+            <div>
+                box
+                <div class="flex">
+                    <div>1</div>
+                    <div>2</div>
+                </div>
+            </div>
             <div class="stitle mt30">最近编辑</div>
 
             <div class="listBox">
