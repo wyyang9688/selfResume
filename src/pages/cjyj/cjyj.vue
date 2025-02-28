@@ -26,13 +26,7 @@
             <div class="center">
                 <div class="btn center" @click="goToResume">开始创建简历</div>
             </div>
-            <div>
-                box
-                <div class="flex">
-                    <div>1</div>
-                    <div>2</div>
-                </div>
-            </div>
+
             <div class="stitle mt30">最近编辑</div>
 
             <div class="listBox">
@@ -60,7 +54,7 @@
 
         <!-- endPop -->
 
-        <gc @login="onLogin" />
+        <!-- <gc @login="onLogin" /> -->
 
         <!-- <feed ref="feedRef" @receiveMsg="receiveMsg" /> -->
         <tabbar />
@@ -85,10 +79,14 @@
         isShowTypeVisible.value = true;
         uni.setStorageSync("pickSc", pickItem.value);
     };
-    const goToResume = () => {
-        push({
-            url: "/pages/resume/resume?id=123"
-        });
+    const goToResume = async () => {
+        const res = await service.createResume({ uid: userStore.userInfo.uid });
+        if (res.code == 0) {
+            push({
+                url: "/pages/resume/resume?type=new&id=" + res.data.id
+            });
+        }
+        uni.hideLoading();
     };
     const feedRef = ref<any>(null);
     const receiveMsg = (msg: any) => {

@@ -490,7 +490,7 @@
     import { useUserStore } from "@/store/user-store";
     import { useAppStore } from "@/store/app-store";
     import { http, ajax } from "@/http/http";
-    import { com } from "@/common/com";
+    import { com, op } from "@/common/com";
     import { onLoad, onReachBottom, onShow } from "@dcloudio/uni-app";
     const appStore = useAppStore();
     const userStore = useUserStore();
@@ -498,449 +498,12 @@
     const showKey = ref("experience");
     const id = ref();
     const jlId = ref();
-    const pform = ref([
-        {
-            label: "姓名",
-            type: "input",
-            val: "",
-            key: "fullName",
-            placeholder: "请输入姓名"
-        },
-        {
-            label: "性别",
-            type: "options",
-            op: [
-                {
-                    label: "男",
-                    value: "男"
-                },
-                {
-                    label: "女",
-                    value: "女"
-                }
-            ],
-            val: "",
-
-            key: "gender",
-            placeholder: "请选择性别"
-        },
-        {
-            label: "出生日期",
-            type: "date",
-            val: "",
-
-            key: "dateOfBirth",
-            placeholder: "请选择出生日期"
-        },
-        {
-            label: "联系电话",
-            type: "input",
-            val: "",
-
-            key: "phone",
-            placeholder: "请输入联系电话"
-        },
-        {
-            label: "电子邮箱",
-            type: "input",
-            val: "",
-            key: "email ",
-            placeholder: "请输入电子邮箱"
-        },
-        {
-            label: "期望职位",
-            type: "input",
-            val: "",
-
-            key: "jobTitle",
-            placeholder: "请输入期望职位"
-        },
-
-        {
-            label: "期望工作城市",
-            type: "input",
-            val: "",
-            key: "desiredWorkCity",
-            placeholder: "请输入期望工作城市"
-        },
-        {
-            label: "薪资要求",
-            type: "input",
-            val: "",
-
-            key: "salaryExpectation",
-            placeholder: "请输入薪资要求"
-        },
-        {
-            label: "求职状态",
-            type: "input",
-            val: "",
-            key: "jobSeekingStatus",
-            placeholder: "请输入求职状态"
-        },
-
-        {
-            label: "政治面貌",
-            type: "input",
-            val: "",
-            key: "politicalAffiliation",
-            placeholder: "请输入政治面貌"
-        },
-
-        {
-            label: "自我总结",
-            type: "editor",
-            val: "",
-
-            key: "Summary",
-            placeholder: "请输入自我总结"
-        }
-    ]);
-    const eform = ref([
-        {
-            label: "学校名称",
-            type: "input",
-            val: "",
-
-            key: "institutionName",
-            placeholder: "请输入学校名称"
-        },
-        {
-            label: "学位",
-            type: "input",
-            val: "",
-
-            key: "degree",
-            placeholder: "请输入学位"
-        },
-        {
-            label: "专业",
-            type: "input",
-            val: "",
-
-            key: "major",
-            placeholder: "请输入学位"
-        },
-        // {
-        //     label: "学历",
-        //     type: "options",
-        //     op: [
-        //         {
-        //             label: "男",
-        //             value: "男"
-        //         },
-        //         {
-        //             label: "女",
-        //             value: "女"
-        //         }
-        //     ],
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择性别"
-        // },
-        {
-            label: "开始时间",
-            type: "date",
-            val: "",
-
-            key: "startDate",
-            placeholder: "请选择开始时间"
-        },
-        {
-            label: "结束时间",
-            type: "date",
-            val: "",
-
-            key: "endDate",
-            placeholder: "请选择结束时间"
-        },
-
-        {
-            label: "在校经历",
-            type: "editor",
-            val: "",
-
-            key: "description",
-            placeholder: "请填写在校经历"
-        }
-    ]);
-    const exform = ref([
-        {
-            label: "公司名称",
-            type: "input",
-            val: "",
-
-            key: "companyName",
-            placeholder: "请输入公司名称"
-        },
-        {
-            label: "职位",
-            type: "input",
-            val: "",
-
-            key: "jobTitle",
-            placeholder: "请输入职位"
-        },
-        // {
-        //     label: "学历",
-        //     type: "options",
-        //     op: [
-        //         {
-        //             label: "男",
-        //             value: "男"
-        //         },
-        //         {
-        //             label: "女",
-        //             value: "女"
-        //         }
-        //     ],
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择性别"
-        // },
-        {
-            label: "开始时间",
-            type: "date",
-            val: "",
-
-            key: "startDate",
-            placeholder: "请选择开始时间"
-        },
-        {
-            label: "结束时间",
-            type: "date",
-            val: "",
-
-            key: "endDate",
-            placeholder: "请选择结束时间"
-        },
-
-        {
-            label: "工作内容",
-            type: "editor",
-            val: "",
-
-            key: "description",
-            placeholder: "请填写工作内容"
-        }
-    ]);
-    const prform = ref([
-        {
-            label: "项目名称",
-            type: "input",
-            val: "",
-
-            key: "projectName",
-            placeholder: "请输入项目名称"
-        },
-        {
-            label: "担任角色",
-            type: "input",
-            val: "",
-
-            key: "role",
-            placeholder: "请输入担任角色"
-        },
-        // {
-        //     label: "学历",
-        //     type: "options",
-        //     op: [
-        //         {
-        //             label: "男",
-        //             value: "男"
-        //         },
-        //         {
-        //             label: "女",
-        //             value: "女"
-        //         }
-        //     ],
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择性别"
-        // },
-        {
-            label: "开始时间",
-            type: "date",
-            val: "",
-
-            key: "startDate",
-            placeholder: "请选择开始时间"
-        },
-        {
-            label: "结束时间",
-            type: "date",
-            val: "",
-
-            key: "endDate",
-            placeholder: "请选择结束时间"
-        },
-
-        {
-            label: "项目内容",
-            type: "editor",
-            val: "",
-
-            key: "description",
-            placeholder: "请填写项目内容"
-        }
-    ]);
-    const sform = ref([
-        {
-            label: "技能名称",
-            type: "input",
-            val: "",
-
-            key: "skillName",
-            placeholder: "请输入技能名称"
-        },
-        // {
-        //     label: "担任角色",
-        //     type: "input",
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请输入担任角色"
-        // },
-        {
-            label: "熟练程度（5为最高等级）",
-            type: "options",
-            op: [
-                {
-                    label: "1",
-                    value: "1"
-                },
-                {
-                    label: "2",
-                    value: "2"
-                },
-                {
-                    label: "3",
-                    value: "3"
-                },
-                {
-                    label: "4",
-                    value: "4"
-                },
-                {
-                    label: "5",
-                    value: "5"
-                }
-            ],
-            val: "",
-
-            key: "proficiencyLevel",
-            placeholder: "请选择技能等级"
-        },
-        // {
-        //     label: "开始时间",
-        //     type: "date",
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择开始时间"
-        // },
-        // {
-        //     label: "结束时间",
-        //     type: "date",
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择结束时间"
-        // },
-
-        {
-            label: "技能说明",
-            type: "editor",
-            val: "",
-
-            key: "skillKeywords",
-            placeholder: "请填写技能说明"
-        }
-    ]);
-    const cform = ref([
-        {
-            label: "证书名称",
-            type: "input",
-            val: "",
-
-            key: "certificationName",
-            placeholder: "请输入证书名称"
-        },
-        {
-            label: "颁发机构",
-            type: "input",
-            val: "",
-
-            key: "issuingOrganization",
-            placeholder: "请输入颁发机构"
-        },
-        // {
-        //     label: "熟练程度（5为最高等级）",
-        //     type: "options",
-        //     op: [
-        //         {
-        //             label: "1",
-        //             value: "1"
-        //         },
-        //         {
-        //             label: "2",
-        //             value: "2"
-        //         },
-        //         {
-        //             label: "3",
-        //             value: "3"
-        //         },
-        //         {
-        //             label: "4",
-        //             value: "4"
-        //         },
-        //         {
-        //             label: "5",
-        //             value: "5"
-        //         }
-        //     ],
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择技能等级"
-        // },
-        {
-            label: "颁发日期",
-            type: "date",
-            val: "",
-
-            key: "issueDate",
-            placeholder: "请选择颁发日期"
-        },
-        // {
-        //     label: "发证网站",
-        //     type: "input",
-        //     val: "",
-
-        //     key: "fullName",
-        //     placeholder: "请选择颁发日期"
-        // },
-        // {
-        //     label: "结束时间",
-        //     type: "date",
-        //     val: "",
-        //
-        // key:'fullName',
-        // placeholder: "请选择结束时间"
-        // },
-
-        {
-            label: "证书描述",
-            type: "editor",
-            val: "",
-
-            key: "description",
-            placeholder: "请填写证书描述"
-        }
-    ]);
+    const pform = ref(op.$op("pform"));
+    const eform = ref(op.$op("eform"));
+    const exform = ref(op.$op("exform"));
+    const prform = ref(op.$op("prform"));
+    const sform = ref(op.$op("sform"));
+    const cform = ref(op.$op("cform"));
     const editorChange = (e, item) => {
         console.log(item);
         console.log(e);
@@ -957,7 +520,14 @@
         item.val = e.value;
     };
     const editorRef = ref();
-    const saveEdit = () => {
+    const changeFormDataToSeverData = (formData) => {
+        let obj = {};
+        for (let v of formData) {
+            obj[v.key] = v.val;
+        }
+        return obj;
+    };
+    const saveEdit = async () => {
         console.log("saveEdit");
         let obj = com.getItem("jlObj");
         obj.experienceList = obj.experienceList || [];
@@ -965,15 +535,35 @@
         obj.projectsList = obj.projectsList || [];
         obj.skillsList = obj.skillsList || [];
         obj.certificationList = obj.certificationList || [];
+        let res = {};
         if (showKey.value == "person") {
             console.log("个人信息");
             console.log(pform.value);
             obj.personItem = pform.value;
+            res = await service.savePersonInfo({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                person: changeFormDataToSeverData(pform.value)
+            });
             // com.setItem("pform", pform.value);
         } else if (showKey.value == "education") {
             console.log("教育经历");
             console.log(eform.value);
             com.setItem("eform", eform.value);
+            let params = changeFormDataToSeverData(eform.value);
+            if (id.value && id.value != 0) {
+                params.id = id.value;
+            }
+            res = await service.saveEducation({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                education: params
+            });
+            if (res.code == 0) {
+                id.value = res.data.id;
+            }
+            uni.hideLoading();
+
             let flag = true;
             if (obj.educationList.length) {
                 for (let v of obj.educationList) {
@@ -991,26 +581,50 @@
         } else if (showKey.value == "experience") {
             console.log("工作经历");
             console.log(exform.value);
+            let params = changeFormDataToSeverData(exform.value);
+            if (id.value && id.value != 0) {
+                params.id = id.value;
+            }
+            res = await service.saveExperience({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                experience: params
+            });
+            if (res.code == 0) {
+                id.value = res.data.id;
+            }
+            uni.hideLoading();
             let flag = true;
             if (obj.experienceList.length) {
                 for (let v of obj.experienceList) {
                     if (v.id == id.value) {
                         flag = false;
-                        v.experience = exform.value;
+                        v.list = exform.value;
                     }
                 }
             }
             if (flag)
                 obj.experienceList.push({
                     id: id.value,
-                    experience: exform.value
+                    list: exform.value
                 });
-
-            com.setItem("exform", exform.value);
         } else if (showKey.value == "projects") {
             console.log("项目经历");
             console.log(prform.value);
-            com.setItem("prform", prform.value);
+            // com.setItem("prform", prform.value);
+            let params = changeFormDataToSeverData(prform.value);
+            if (id.value && id.value != 0) {
+                params.id = id.value;
+            }
+            res = await service.saveProjects({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                project: params
+            });
+            if (res.code == 0) {
+                id.value = res.data.id;
+            }
+            uni.hideLoading();
             let flag = true;
             if (obj.projectsList.length) {
                 for (let v of obj.projectsList) {
@@ -1029,6 +643,19 @@
             console.log("技能");
             console.log(sform.value);
             com.setItem("sform", sform.value);
+            let params = changeFormDataToSeverData(sform.value);
+            if (id.value && id.value != 0) {
+                params.id = id.value;
+            }
+            res = await service.saveSkills({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                skills: params
+            });
+            if (res.code == 0) {
+                id.value = res.data.id;
+            }
+            uni.hideLoading();
             let flag = true;
             if (obj.skillsList.length) {
                 for (let v of obj.skillsList) {
@@ -1047,6 +674,20 @@
             console.log("证书");
             console.log(cform.value);
             com.setItem("cform", cform.value);
+
+            let params = changeFormDataToSeverData(cform.value);
+            if (id.value && id.value != 0) {
+                params.id = id.value;
+            }
+            res = await service.saveCertifications({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: obj.id,
+                certifications: params
+            });
+            if (res.code == 0) {
+                id.value = res.data.id;
+            }
+            uni.hideLoading();
             let flag = true;
             if (obj.certificationList.length) {
                 for (let v of obj.certificationList) {
@@ -1064,7 +705,7 @@
         }
         console.log(obj);
         com.setItem("jlObj", obj);
-        back()
+        back();
     };
     interface Config {
         BASE_URL: string;
@@ -1284,7 +925,7 @@
             if (obj.experienceList) {
                 for (let v of obj.experienceList) {
                     if (v.id == id.value) {
-                        exform.value = v.experience;
+                        exform.value = v.list;
                     }
                 }
                 console.log(exform.value.find((v) => v.type == "editor").val);
@@ -1328,7 +969,7 @@
                     });
                 }, 1000);
             }
-        }else if (op.key == "skills") {
+        } else if (op.key == "skills") {
             if (obj.skillsList) {
                 for (let v of obj.skillsList) {
                     if (v.id == id.value) {
@@ -1344,7 +985,7 @@
                     });
                 }, 1000);
             }
-        }else if (op.key == "certification") {
+        } else if (op.key == "certification") {
             if (obj.certificationList) {
                 for (let v of obj.certificationList) {
                     if (v.id == id.value) {
@@ -1359,7 +1000,7 @@
                         );
                     });
                 }, 1000);
-            } 
+            }
         }
     });
 </script>

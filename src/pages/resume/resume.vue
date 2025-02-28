@@ -1003,14 +1003,17 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del" @click="
+                            <div
+                                class="del"
+                                @click="
                                     delPerson(
                                         'projects',
                                         item.id,
                                         ProjectsForm,
                                         index
                                     )
-                                ">
+                                "
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1187,7 +1190,10 @@
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt" style="padding-bottom: 26rpx">
                         <div class="floatBtnGroup" style="bottom: -0.856rem">
-                            <div class="edit"  @click="editPerson('skills', item.id)">
+                            <div
+                                class="edit"
+                                @click="editPerson('skills', item.id)"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1327,14 +1333,17 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del" @click="
+                            <div
+                                class="del"
+                                @click="
                                     delPerson(
                                         'skills',
                                         item.id,
                                         SkillsForm,
                                         index
                                     )
-                                ">
+                                "
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1488,7 +1497,9 @@
                 <div class="title">证书</div>
                 <div class="rt">
                     <!-- <div class="btn">+ 编辑</div> -->
-                    <div class="btn"  @click="editPerson('certification')">+ 添加</div>
+                    <div class="btn" @click="editPerson('certification')">
+                        + 添加
+                    </div>
                 </div>
             </div>
             <div class="fitem">
@@ -1501,7 +1512,10 @@
                     <!-- <div class="label">{{ item.epName }}</div> -->
                     <div class="valBox pt">
                         <div class="floatBtnGroup">
-                            <div class="edit"  @click="editPerson('certification', item.id)">
+                            <div
+                                class="edit"
+                                @click="editPerson('certification', item.id)"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1641,14 +1655,17 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="del" @click="
+                            <div
+                                class="del"
+                                @click="
                                     delPerson(
                                         'certification',
                                         item.id,
                                         CertificationForm,
                                         index
                                     )
-                                ">
+                                "
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1830,7 +1847,7 @@
     import { useUserStore } from "@/store/user-store";
     import { useAppStore } from "@/store/app-store";
     import { http, ajax } from "@/http/http";
-    import { com } from "@/common/com";
+    import { com, op } from "@/common/com";
     import { onLoad, onReachBottom, onShow } from "@dcloudio/uni-app";
     const appStore = useAppStore();
     const userStore = useUserStore();
@@ -1859,49 +1876,6 @@
             val: "",
             placeholder: "请输入电子邮箱"
         }
-        // {
-        //     label: "性别",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入性别"
-        // },
-        // {
-        //     label: "出生日期",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入出生日期"
-        // },
-
-        // {
-        //     label: "所在城市",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入所在城市"
-        // },
-        // {
-        //     label: "工作年限",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入工作年限"
-        // },
-        // {
-        //     label: "学历",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入学历"
-        // },
-        // {
-        //     label: "求职意向",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入求职意向"
-        // },
-        // {
-        //     label: "自我评价",
-        //     type: "input",
-        //     val: "",
-        //     placeholder: "请输入自我评价"
-        // }
     ]);
     const ExperienceForm = ref([
         {
@@ -1988,6 +1962,15 @@
     };
     const delPerson = (key, id, list, index) => {
         //删除key类型的ID项目
+        if (key == "projects") {
+            service.delProjects({
+                uid: userStore.userInfo.uid,
+                resumeRecordId: jlId.value,
+                project: {
+                    id: id
+                }
+            });
+        }
         list.splice(index, 1);
     };
     const exit = () => {
@@ -1996,19 +1979,102 @@
         });
     };
     const jlId = ref("");
-    const getJLDetail = () => {
+    const getJLDetail = async () => {
         // 获取简历详情
-        // com.setItem("jlObj", {
-        //         id:jlId.value
-        //     });
+        let res = await service.getResumeInfo({
+            uid: userStore.userInfo.uid,
+            resumeRecordId: jlId.value
+        });
+        let obj: any = {
+            id: jlId.value
+        };
+        if (res.code == 0) {
+            if (res.data.person) {
+                obj.personItem = op.$op("pform");
+                for (let v of obj.personItem) {
+                    v.val = res.data.person[v.key];
+                }
+            }
+            if (res.data.projects) {
+                obj.projectsList = [];
+                for (let v of res.data.projects) {
+                    let o = {
+                        id: v.id,
+                        list: op.$op("prform")
+                    };
+                    for (let k in v) {
+                        if (o.list.find((vv) => vv.key == k))
+                            o.list.find((vv) => vv.key == k).val = v[k];
+                    }
+                    obj.projectsList.push(o);
+                }
+            }
+            if (res.data.experience) {
+                obj.experienceList = [];
+                for (let v of res.data.experience) {
+                    let o = {
+                        id: v.id,
+                        list: op.$op("exform")
+                    };
+                    for (let k in v) {
+                        if (o.list.find((vv) => vv.key == k))
+                            o.list.find((vv) => vv.key == k).val = v[k];
+                    }
+                    obj.experienceList.push(o);
+                }
+            }
+            if (res.data.education) {
+                obj.educationList = [];
+                for (let v of res.data.education) {
+                    let o = {
+                        id: v.id,
+                        list: op.$op("eform")
+                    };
+                    for (let k in v) {
+                        if (o.list.find((vv) => vv.key == k))
+                            o.list.find((vv) => vv.key == k).val = v[k];
+                    }
+                    obj.educationList.push(o);
+                }
+            }
+            if (res.data.skills) {
+                obj.skillsList = [];
+                for (let v of res.data.skills) {
+                    let o = {
+                        id: v.id,
+                        list: op.$op("sform")
+                    };
+                    for (let k in v) {
+                        if (o.list.find((vv) => vv.key == k))
+                            o.list.find((vv) => vv.key == k).val = v[k];
+                    }
+                    obj.skillsList.push(o);
+                }
+            }
+            if (res.data.certifications) {
+                obj.certificationList = [];
+                for (let v of res.data.certifications) {
+                    let o = {
+                        id: v.id,
+                        list: op.$op("cform")
+                    };
+                    for (let k in v) {
+                        if (o.list.find((vv) => vv.key == k))
+                            o.list.find((vv) => vv.key == k).val = v[k];
+                    }
+                    obj.certificationList.push(o);
+                }
+            }
+        }
+        console.log(obj);
+        com.setItem("jlObj", obj);
+        refreshData();
     };
     onLoad((op) => {
         console.log(op);
         com.setItem("editJlId", op!.id);
         jlId.value = op!.id;
-        if (op.type == "new") {
-            
-
+        if (op?.type == "new") {
             com.setItem("jlObj", {
                 id: op!.id
             });
@@ -2016,11 +2082,10 @@
             getJLDetail(op.id);
         }
     });
-    onShow((op) => {
-        console.log(op);
+    const refreshData = () => {
         let obj = com.getItem("jlObj");
         console.log(obj);
-     
+
         if (obj?.personItem) {
             let pformAdd = obj.personItem;
             for (let v of pform.value) {
@@ -2035,20 +2100,17 @@
             ExperienceForm.value = obj.experienceList.map((v) => {
                 return {
                     ...v,
-                    epName: v.experience.find((vv) => vv.key == "companyName")
-                        .val,
-                    epType: v.experience.find((vv) => vv.key == "jobTitle").val,
+                    epName: v.list.find((vv) => vv.key == "companyName").val,
+                    epType: v.list.find((vv) => vv.key == "jobTitle").val,
                     epTime:
-                        v.experience.find((vv) => vv.key == "startDate").val +
+                        v.list.find((vv) => vv.key == "startDate").val +
                         "-" +
-                        v.experience.find((vv) => vv.key == "endDate").val,
-                    epContent: v.experience.find(
-                        (vv) => vv.key == "description"
-                    ).val
+                        v.list.find((vv) => vv.key == "endDate").val,
+                    epContent: v.list.find((vv) => vv.key == "description").val
                 };
             });
-        }else{
-            ExperienceForm.value=[]
+        } else {
+            ExperienceForm.value = [];
         }
         if (obj?.educationList) {
             EducationForm.value = obj.educationList.map((v) => {
@@ -2064,8 +2126,8 @@
                     epContent: v.list.find((vv) => vv.key == "description").val
                 };
             });
-        }else{
-            EducationForm.value=[]
+        } else {
+            EducationForm.value = [];
         }
         if (obj?.projectsList) {
             ProjectsForm.value = obj.projectsList.map((v) => {
@@ -2087,7 +2149,7 @@
             SkillsForm.value = obj.skillsList.map((v) => {
                 return {
                     ...v,
-                    epName: v.list.find((vv) => vv.key == "skillName").val,
+                    epName: v.list.find((vv) => vv.key == "skillName").val
                     // epType: v.list.find((vv) => vv.key == "role").val,
                     // epTime:
                     //     v.list.find((vv) => vv.key == "startDate").val +
@@ -2096,8 +2158,8 @@
                     // epContent: v.list.find((vv) => vv.key == "description").val
                 };
             });
-        }else{
-            SkillsForm.value=[]
+        } else {
+            SkillsForm.value = [];
         }
         if (obj?.certificationList) {
             CertificationForm.value = obj.certificationList.map((v) => {
@@ -2107,17 +2169,20 @@
                         .val,
                     epType: v.list.find((vv) => vv.key == "issuingOrganization")
                         .val,
-                    epTime:
-                        v.list.find((vv) => vv.key == "issueDate").val 
-                        // +
-                        // "-" +
-                        // v.list.find((vv) => vv.key == "endDate").val
-                        ,
+                    epTime: v.list.find((vv) => vv.key == "issueDate").val,
+                    // +
+                    // "-" +
+                    // v.list.find((vv) => vv.key == "endDate").val
                     epContent: v.list.find((vv) => vv.key == "description").val
                 };
-            }); 
+            });
+        } else {
+            CertificationForm.value = [];
         }
-        console.log(pform);
+    };
+    onShow((op) => {
+        console.log(op);
+        refreshData();
     });
     onMounted(() => {
         //

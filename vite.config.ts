@@ -74,8 +74,8 @@ const getViteConfig = (configEnv: ConfigEnv) => {
                 "/proxy": {
                     // target: "https://ruyingreview.hentre.top",
                     // target: "https://rysmall.hentre.top",
-                    // target: "http://172.16.8.80:8089/",
-                    target: "https://ruyingsmall.hentre.top",
+                    target: "http://172.16.8.80:8089/",
+                    // target: "https://ruyingsmall.hentre.top",
                     changeOrigin: true,
                     secure: false,
                     ws: true,

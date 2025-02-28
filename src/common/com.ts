@@ -532,5 +532,455 @@ class Common {
         }
     };
 }
+class Options {
+    $op = (key: string) => {
+        let op: any = {
+            pform: [
+                {
+                    label: "姓名",
+                    type: "input",
+                    val: "",
+                    key: "fullName",
+                    placeholder: "请输入姓名"
+                },
+                {
+                    label: "性别",
+                    type: "options",
+                    op: [
+                        {
+                            label: "男",
+                            value: "男"
+                        },
+                        {
+                            label: "女",
+                            value: "女"
+                        }
+                    ],
+                    val: "",
 
+                    key: "gender",
+                    placeholder: "请选择性别"
+                },
+                {
+                    label: "出生日期",
+                    type: "date",
+                    val: "",
+
+                    key: "dateOfBirth",
+                    placeholder: "请选择出生日期"
+                },
+                {
+                    label: "联系电话",
+                    type: "input",
+                    val: "",
+
+                    key: "phone",
+                    placeholder: "请输入联系电话"
+                },
+                {
+                    label: "电子邮箱",
+                    type: "input",
+                    val: "",
+                    key: "email",
+                    placeholder: "请输入电子邮箱"
+                },
+                {
+                    label: "期望职位",
+                    type: "input",
+                    val: "",
+
+                    key: "jobTitle",
+                    placeholder: "请输入期望职位"
+                },
+
+                {
+                    label: "期望工作城市",
+                    type: "input",
+                    val: "",
+                    key: "desiredWorkCity",
+                    placeholder: "请输入期望工作城市"
+                },
+                {
+                    label: "薪资要求",
+                    type: "input",
+                    val: "",
+
+                    key: "salaryExpectation",
+                    placeholder: "请输入薪资要求"
+                },
+                {
+                    label: "求职状态",
+                    type: "input",
+                    val: "",
+                    key: "jobSeekingStatus",
+                    placeholder: "请输入求职状态"
+                },
+
+                {
+                    label: "政治面貌",
+                    type: "input",
+                    val: "",
+                    key: "politicalAffiliation",
+                    placeholder: "请输入政治面貌"
+                },
+
+                {
+                    label: "自我总结",
+                    type: "editor",
+                    val: "",
+
+                    key: "summary",
+                    placeholder: "请输入自我总结"
+                }
+            ],
+            eform: [
+                {
+                    label: "学校名称",
+                    type: "input",
+                    val: "",
+
+                    key: "institutionName",
+                    placeholder: "请输入学校名称"
+                },
+                {
+                    label: "学位",
+                    type: "input",
+                    val: "",
+
+                    key: "degree",
+                    placeholder: "请输入学位"
+                },
+                {
+                    label: "专业",
+                    type: "input",
+                    val: "",
+
+                    key: "major",
+                    placeholder: "请输入学位"
+                },
+                // {
+                //     label: "学历",
+                //     type: "options",
+                //     op: [
+                //         {
+                //             label: "男",
+                //             value: "男"
+                //         },
+                //         {
+                //             label: "女",
+                //             value: "女"
+                //         }
+                //     ],
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择性别"
+                // },
+                {
+                    label: "开始时间",
+                    type: "date",
+                    val: "",
+
+                    key: "startDate",
+                    placeholder: "请选择开始时间"
+                },
+                {
+                    label: "结束时间",
+                    type: "date",
+                    val: "",
+
+                    key: "endDate",
+                    placeholder: "请选择结束时间"
+                },
+
+                {
+                    label: "在校经历",
+                    type: "editor",
+                    val: "",
+
+                    key: "description",
+                    placeholder: "请填写在校经历"
+                }
+            ],
+            exform: [
+                {
+                    label: "公司名称",
+                    type: "input",
+                    val: "",
+
+                    key: "companyName",
+                    placeholder: "请输入公司名称"
+                },
+                {
+                    label: "职位",
+                    type: "input",
+                    val: "",
+
+                    key: "jobTitle",
+                    placeholder: "请输入职位"
+                },
+                // {
+                //     label: "学历",
+                //     type: "options",
+                //     op: [
+                //         {
+                //             label: "男",
+                //             value: "男"
+                //         },
+                //         {
+                //             label: "女",
+                //             value: "女"
+                //         }
+                //     ],
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择性别"
+                // },
+                {
+                    label: "开始时间",
+                    type: "date",
+                    val: "",
+
+                    key: "startDate",
+                    placeholder: "请选择开始时间"
+                },
+                {
+                    label: "结束时间",
+                    type: "date",
+                    val: "",
+
+                    key: "endDate",
+                    placeholder: "请选择结束时间"
+                },
+
+                {
+                    label: "工作内容",
+                    type: "editor",
+                    val: "",
+
+                    key: "description",
+                    placeholder: "请填写工作内容"
+                }
+            ],
+            prform: [
+                {
+                    label: "项目名称",
+                    type: "input",
+                    val: "",
+
+                    key: "projectName",
+                    placeholder: "请输入项目名称"
+                },
+                {
+                    label: "担任角色",
+                    type: "input",
+                    val: "",
+
+                    key: "role",
+                    placeholder: "请输入担任角色"
+                },
+                // {
+                //     label: "学历",
+                //     type: "options",
+                //     op: [
+                //         {
+                //             label: "男",
+                //             value: "男"
+                //         },
+                //         {
+                //             label: "女",
+                //             value: "女"
+                //         }
+                //     ],
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择性别"
+                // },
+                {
+                    label: "开始时间",
+                    type: "date",
+                    val: "",
+
+                    key: "startDate",
+                    placeholder: "请选择开始时间"
+                },
+                {
+                    label: "结束时间",
+                    type: "date",
+                    val: "",
+
+                    key: "endDate",
+                    placeholder: "请选择结束时间"
+                },
+
+                {
+                    label: "项目内容",
+                    type: "editor",
+                    val: "",
+
+                    key: "description",
+                    placeholder: "请填写项目内容"
+                }
+            ],
+            sform: [
+                {
+                    label: "技能名称",
+                    type: "input",
+                    val: "",
+
+                    key: "skillName",
+                    placeholder: "请输入技能名称"
+                },
+                // {
+                //     label: "担任角色",
+                //     type: "input",
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请输入担任角色"
+                // },
+                {
+                    label: "熟练程度（5为最高等级）",
+                    type: "options",
+                    op: [
+                        {
+                            label: "1",
+                            value: "1"
+                        },
+                        {
+                            label: "2",
+                            value: "2"
+                        },
+                        {
+                            label: "3",
+                            value: "3"
+                        },
+                        {
+                            label: "4",
+                            value: "4"
+                        },
+                        {
+                            label: "5",
+                            value: "5"
+                        }
+                    ],
+                    val: "",
+
+                    key: "proficiencyLevel",
+                    placeholder: "请选择技能等级"
+                },
+                // {
+                //     label: "开始时间",
+                //     type: "date",
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择开始时间"
+                // },
+                // {
+                //     label: "结束时间",
+                //     type: "date",
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择结束时间"
+                // },
+
+                {
+                    label: "技能说明",
+                    type: "editor",
+                    val: "",
+
+                    key: "skillKeywords",
+                    placeholder: "请填写技能说明"
+                }
+            ],
+            cform: [
+                {
+                    label: "证书名称",
+                    type: "input",
+                    val: "",
+
+                    key: "certificationName",
+                    placeholder: "请输入证书名称"
+                },
+                {
+                    label: "颁发机构",
+                    type: "input",
+                    val: "",
+
+                    key: "issuingOrganization",
+                    placeholder: "请输入颁发机构"
+                },
+                // {
+                //     label: "熟练程度（5为最高等级）",
+                //     type: "options",
+                //     op: [
+                //         {
+                //             label: "1",
+                //             value: "1"
+                //         },
+                //         {
+                //             label: "2",
+                //             value: "2"
+                //         },
+                //         {
+                //             label: "3",
+                //             value: "3"
+                //         },
+                //         {
+                //             label: "4",
+                //             value: "4"
+                //         },
+                //         {
+                //             label: "5",
+                //             value: "5"
+                //         }
+                //     ],
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择技能等级"
+                // },
+                {
+                    label: "颁发日期",
+                    type: "date",
+                    val: "",
+
+                    key: "issueDate",
+                    placeholder: "请选择颁发日期"
+                },
+                // {
+                //     label: "发证网站",
+                //     type: "input",
+                //     val: "",
+
+                //     key: "fullName",
+                //     placeholder: "请选择颁发日期"
+                // },
+                // {
+                //     label: "结束时间",
+                //     type: "date",
+                //     val: "",
+                //
+                // key:'fullName',
+                // placeholder: "请选择结束时间"
+                // },
+
+                {
+                    label: "证书描述",
+                    type: "editor",
+                    val: "",
+
+                    key: "description",
+                    placeholder: "请填写证书描述"
+                }
+            ]
+        };
+        return key ? op[key] : op;
+    };
+}
 export const com = new Common();
+export const op = new Options();

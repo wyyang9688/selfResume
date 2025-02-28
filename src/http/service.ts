@@ -31,6 +31,150 @@ export interface RegParams {
     gender?: string | number;
 }
 class Service {
+    async createResume(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/record`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async getResumeInfo(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/info/byid`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async savePersonInfo(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/person`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async saveSkills(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/skills`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async delSkills(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/skills`,
+            { ...data, delFlag: true },
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async saveCertifications(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/certifications`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async delCertifications(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/certifications`,
+            { ...data, delFlag: true },
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async saveExperience(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/experience`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async delExperience(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/experience`,
+            { ...data, delFlag: true },
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async saveEducation(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/education`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async delEducation(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/education`,
+            { ...data, delFlag: true },
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async saveProjects(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/save/projects`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async delProjects(data: any) {
+        const serviceData = await http.post<AnyObject>(
+            `/api/resume/save/projects`,
+            { ...data, delFlag: true },
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+
     async printMsg() {
         console.log(userStore.userInfo);
         console.log(userStore.test);
