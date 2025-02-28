@@ -132,7 +132,7 @@
                         </g>
                     </g>
                 </svg>
-                最后保存于 10:30
+                最后保存于 {{ lastTime }}
             </div>
             <div class="savebtn btn flex center">预览简历</div>
             <div class="exitbtn btn flex center">导出PDF</div>
@@ -143,9 +143,10 @@
                 <div class="listBox">
                     <div
                         class="itemBox m20"
-                        v-for="(item, index) in 4"
+                        v-for="(item, index) in temList"
                         :key="index"
-                        :class="index == 0 ? 'pick' : ''"
+                        :class="item.isPick ? 'pick' : ''"
+                        @click="pickTem(item)"
                     >
                         <div class="item">
                             <div class="imgBox">
@@ -1857,6 +1858,19 @@
     const resumeData = ref<any>({
         person: {}
     });
+    const temList = ref([
+        {},
+        {
+            isPick: true
+        },
+        {}
+    ]);
+    const pickTem = (item) => {
+        for (let v of temList.value) {
+            v.isPick = false;
+        }
+        item.isPick = true;
+    };
     const pform = ref([
         {
             label: "姓名",
@@ -1979,6 +1993,7 @@
         });
     };
     const jlId = ref("");
+    const lastTime = ref();
     const getJLDetail = async () => {
         // 获取简历详情
         let res = await service.getResumeInfo({
@@ -1989,6 +2004,7 @@
             id: jlId.value
         };
         if (res.code == 0) {
+            com.setItem("lastEditTime", com.format(new Date(), "hh:mm"));
             if (res.data.person) {
                 obj.personItem = op.$op("pform");
                 for (let v of obj.personItem) {
@@ -2075,6 +2091,7 @@
         com.setItem("editJlId", op!.id);
         jlId.value = op!.id;
         if (op?.type == "new") {
+            com.setItem("lastEditTime", com.format(new Date(), "hh:mm"));
             com.setItem("jlObj", {
                 id: op!.id
             });
@@ -2085,7 +2102,7 @@
     const refreshData = () => {
         let obj = com.getItem("jlObj");
         console.log(obj);
-
+        lastTime.value = com.getItem("lastEditTime");
         if (obj?.personItem) {
             let pformAdd = obj.personItem;
             for (let v of pform.value) {

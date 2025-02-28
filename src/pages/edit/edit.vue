@@ -528,6 +528,7 @@
         return obj;
     };
     const saveEdit = async () => {
+        com.setItem("lastEditTime", com.format(new Date(), "hh:mm"));
         console.log("saveEdit");
         let obj = com.getItem("jlObj");
         obj.experienceList = obj.experienceList || [];
