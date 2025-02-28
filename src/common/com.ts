@@ -168,7 +168,11 @@ class Common {
             (match: any): any => entityMap[match] || match
         );
     };
-    copyMsg = (text: any = "", showToast: boolean = false) => {
+    copyMsg = (
+        text: any = "",
+        showToast: boolean = false,
+        msg: string = "复制成功"
+    ) => {
         text = this.convertSafeCharsToTags(text);
         console.log(text);
         console.log(showToast);
@@ -180,7 +184,7 @@ class Common {
         });
         if (showToast) {
             console.log("复制成功");
-            toast("复制成功");
+            toast(msg);
         }
     };
     checkLogin = (): boolean => {

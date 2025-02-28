@@ -38,6 +38,13 @@
 				// "navigationBarBackgroundColor": "#f8f8f8"
 			}
 		}, {
+			"path": "pages/tjwx/viewPdf",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+				// "navigationBarBackgroundColor": "#f8f8f8"
+			}
+		}, {
 			"path": "pages/home/home-index",
 			"style": {
 				"navigationStyle": "custom",

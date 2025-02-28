@@ -31,6 +31,17 @@ export interface RegParams {
     gender?: string | number;
 }
 class Service {
+    async getPdfSrc(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/download/pdf`,
+            data,
+            {},
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
     async createResume(data: any) {
         const serviceData = await ajax.post<AnyObject>(
             `/api/resume/save/record`,

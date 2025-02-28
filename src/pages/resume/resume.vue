@@ -16,7 +16,7 @@
             >
                 创建简历
             </div>
-            <div class="savebtn btn flex center">
+            <div class="savebtn btn flex center" @click="exit">
                 <div class="svgBox" style="margin-top: 2px">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -134,8 +134,10 @@
                 </svg>
                 最后保存于 {{ lastTime }}
             </div>
-            <div class="savebtn btn flex center">预览简历</div>
-            <div class="exitbtn btn flex center">导出PDF</div>
+            <div class="savebtn btn flex center" @click="openPdf">预览简历</div>
+            <div class="exitbtn btn flex center" @click="downloadPdf">
+                导出PDF
+            </div>
         </div>
         <div class="template">
             <div class="title mt20">选择模版</div>
@@ -1858,6 +1860,35 @@
     const resumeData = ref<any>({
         person: {}
     });
+    const openPdf = async () => {
+        const res = await service.getPdfSrc({
+            uid: userStore.userInfo.uid,
+
+            resumeRecordId: jlId.value
+        });
+        if (res.code == 0) {
+            let downloadPdfUrl = res.data.downloadPdfUrl;
+            push({
+                url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+            });
+        }
+        uni.hideLoading();
+    };
+    const downloadPdf = async () => {
+        const res = await service.getPdfSrc({
+            uid: userStore.userInfo.uid,
+
+            resumeRecordId: jlId.value
+        });
+        if (res.code == 0) {
+            let downloadPdfUrl = res.data.downloadPdfUrl;
+            com.copyMsg(downloadPdfUrl, true, "下载链接已复制");
+            // push({
+            //     url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+            // });
+        }
+        uni.hideLoading();
+    };
     const temList = ref([
         {},
         {

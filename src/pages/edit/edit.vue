@@ -3,7 +3,16 @@
     <div class="editPage">
         <div class="person" v-if="showKey == 'person'">
             <div class="header center mt10" @click="selectImg('')">
+                <div class="imgBox flex center" v-if="headerSrc">
+                    <img
+                        :src="headerSrc"
+                        style="max-width: 70px; max-height: 70px"
+                        class="resImg"
+                        alt=""
+                    />
+                </div>
                 <svg
+                    v-if="!headerSrc"
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     fill="none"
@@ -541,10 +550,15 @@
             console.log("个人信息");
             console.log(pform.value);
             obj.personItem = pform.value;
+            com.setItem("headerSrc", headerSrc.value);
+            let params = changeFormDataToSeverData(pform.value);
+            if (headerSrc.value) {
+                params.picture = headerSrc.value;
+            }
             res = await service.savePersonInfo({
                 uid: userStore.userInfo.uid,
                 resumeRecordId: obj.id,
-                person: changeFormDataToSeverData(pform.value)
+                person: params
             });
             // com.setItem("pform", pform.value);
         } else if (showKey.value == "education") {
@@ -718,26 +732,12 @@
         //     name: ""
         // }
     ]);
+    const headerSrc = ref(""); //../../static/logo.png
     const selectImg = (item: string = "") => {
         console.log(item);
         try {
-            // uni.showLoading();
             com.onMsg(async (e: any) => {
                 if (e.src) {
-                    // const regex = /[^/]+$/;
-                    // const result =
-                    //     e.path.match(regex)[0].split(".")[0] + e.extension;
-                    // const resp = await http.upload<{
-                    //     code: Number;
-                    //     data: string;
-                    // }>(
-                    //     "/api/acc/integral/fileUpload?imageName=" + result,
-                    //     e.path,
-                    //     {}
-                    // );
-                    // com.cs(JSON.stringify(resp));
-                    // console.log(resp);
-                    // console.log(config!.BASE_URL + "/api/image/" + resp.data);
                     fileList.value.push({
                         url:
                             config!.BASE_URL +
@@ -747,6 +747,12 @@
                     });
                     com.cs(JSON.stringify(fileList.value));
                     console.log(fileList.value);
+                    headerSrc.value =
+                        config!.BASE_URL +
+                        "/api/image/" +
+                        JSON.parse(e.src).data;
+                    console.log("headerSrc.value");
+                    console.log(headerSrc.value);
                 }
             });
             com.sendMsg("cImg", {
@@ -895,6 +901,10 @@
         console.log(op);
         if (op?.key) {
             showKey.value = op.key;
+        }
+        let headerSrcLoc = com.getItem("headerSrc");
+        if (headerSrcLoc) {
+            headerSrc.value = headerSrcLoc;
         }
         let obj = com.getItem("jlObj");
         console.log(obj);
