@@ -108,6 +108,15 @@
 			}
 		},
 		{
+			"path": "pages/my/payProduct",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+
+			}
+		},
+		{
 			"path": "pages/wdwx/wdwx-detail",
 			"style": {
 				"navigationStyle": "custom",

@@ -42,8 +42,8 @@ program
     .command("run")
     .description("start  server")
     .argument("[string]", "modalType", "dev")
-    .option("-p ,--platform [string]", "select platfroms", "mp-weixin")
-    .option("-e ,--env [string]", "select env", "dev")
+    .option("-p,--platform [string]", "select platfroms", "mp-weixin")
+    .option("-e,--env [string]", "select env", "dev")
     .action(async (arg, { platform, env }) => {
         process.env.PROJECTENV = env;
         await Promise.all([createManifest()]).catch((err) => {
