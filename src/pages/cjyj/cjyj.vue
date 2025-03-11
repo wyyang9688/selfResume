@@ -32,19 +32,24 @@
             <div class="listBox">
                 <div
                     class="itemBox m20"
-                    v-for="(item, index) in 4"
+                    v-for="(item, index) in list"
                     :key="index"
+                    @click="goToEdit(item)"
                 >
                     <div class="item">
                         <div class="imgBox">
                             <image
                                 class="resImg sd"
-                                :src="'/static/jianli/template/t01.png'"
+                                :src="
+                                    '/static/jianli/template/' +
+                                    item.tempName +
+                                    '.jpg'
+                                "
                                 mode="widthFix"
                             />
                         </div>
                         <div class="name">产品锦鲤简历</div>
-                        <div class="time">2025-10-15 编辑</div>
+                        <div class="time">{{ item.updateTime }}编辑</div>
                     </div>
                 </div>
             </div>
@@ -79,6 +84,7 @@
         isShowTypeVisible.value = true;
         uni.setStorageSync("pickSc", pickItem.value);
     };
+    const list = ref<any>([]);
     const goToResume = async () => {
         const res = await service.createResume({ uid: userStore.userInfo.uid });
         if (res.code == 0) {
@@ -88,8 +94,13 @@
         }
         uni.hideLoading();
     };
+    const goToEdit = (item) => {
+        push({
+            url: "/pages/resume/resume?id=" + item.id
+        });
+    };
     const feedRef = ref<any>(null);
-    const receiveMsg = (msg: any) => {
+    const receiveMsg = (msg) => {
         console.log(msg);
         // push({
         //     url: "/pages/tjwx/wxzs?taskId=" + pickTaskItem.value.id
@@ -99,7 +110,7 @@
     const hasMore = ref(true);
     const hasLoading = ref(false);
     const total = ref(0);
-    const getXTList = async (type: string) => {
+    const getXTList = async (type) => {
         if (!hasMore.value && type != "init") {
             console.log("noMore");
             return;
@@ -259,10 +270,26 @@
             console.log(e);
         }
         if (location.href.includes("localhost") && !pn) {
-            // login("15348401122");
-            login("13647494174");
+            login("15348401122");
+            // login("13647494174");
         }
     });
+    const getHistoryList = async () => {
+        const res = await service.getHistoryList({
+            uid: userStore.userInfo.uid
+        });
+        if (res.code == 0) {
+            list.value = res.data.map((v) => {
+                return {
+                    ...v,
+                    updateTime: com.format(
+                        v.updateTime || v.createTime,
+                        "YYYY-MM-DD"
+                    )
+                };
+            });
+        }
+    };
     const login = async (pn: string) => {
         const res = await service.loginIn({
             pn,
@@ -295,6 +322,7 @@
                 )
                     getXTList("init");
             }, 500);
+            getHistoryList();
         }
     };
     const isShareFlag = ref(false);

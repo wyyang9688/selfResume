@@ -9,6 +9,9 @@ declare module 'vue' {
   export interface GlobalComponents {
     Editor: typeof import('./src/components/editor.vue')['default']
     EditSec: typeof import('./src/components/editSec.vue')['default']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
+    ElOption: typeof import('element-plus/es')['ElOption']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     Feedquery: typeof import('./src/components/feedquery.vue')['default']
     Gc: typeof import('./src/components/gc.vue')['default']
     Imgdetail: typeof import('./src/components/imgdetail.vue')['default']

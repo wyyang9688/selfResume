@@ -31,6 +31,17 @@ export interface RegParams {
     gender?: string | number;
 }
 class Service {
+    async getHistoryList(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/info/resumerecord`,
+            data,
+            data,
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
     async getPdfSrc(data: any) {
         const serviceData = await ajax.post<AnyObject>(
             `/api/resume/download/pdf`,
@@ -193,6 +204,16 @@ class Service {
     async getProduct(data: any = {}) {
         const serviceData = await http.get<AnyObject>(
             `/itproduct/api/lst`,
+            data,
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
+    async getJlProduct(data: any = {}) {
+        const serviceData = await http.get<AnyObject>(
+            `/itproduct/api/product/lst`,
             data,
             {
                 showToast: true
@@ -586,7 +607,7 @@ class Service {
         mode?: string;
         cuewordType?: string | number; //0-default,1-title,2-content
     }) {
-        let query = { ...params };
+        const query = { ...params };
         if ("question" in query) {
             delete (query as { question?: string }).question;
         }
@@ -779,7 +800,7 @@ class Service {
         return serviceData.data;
     }
     async getIndustryType(styleConfigsItemsCode: number | string = 1004) {
-        let params = {
+        const params = {
             styleConfigsItemsCode
         };
         const serviceData = await httpA.post<any>(

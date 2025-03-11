@@ -45,10 +45,12 @@ program
     .option("-p,--platform [string]", "select platfroms", "mp-weixin")
     .option("-e,--env [string]", "select env", "dev")
     .action(async (arg, { platform, env }) => {
+        console.log(platform, env);
         process.env.PROJECTENV = env;
         await Promise.all([createManifest()]).catch((err) => {
             process.exit(1);
         });
+        console.log(PLATFORMS);
         if (PLATFORMS.includes(platform)) {
             if (arg == "dev") {
                 runDev({ platform, ssr: false });
@@ -56,6 +58,7 @@ program
                 runBuild({ platform, ssr: false });
             }
         } else {
+            console.log(platform, env);
             console.log(`${chalk.red("Error  platform")}`);
         }
     });

@@ -154,7 +154,7 @@
                             <div class="imgBox">
                                 <image
                                     class="resImg sd"
-                                    :src="'/static/jianli/template/t01.png'"
+                                    :src="item.src"
                                     mode="widthFix"
                                 />
                             </div>
@@ -1860,48 +1860,175 @@
     const resumeData = ref<any>({
         person: {}
     });
+    const tempName = computed(() => selectedTemplate.value.key);
     const openPdf = async () => {
-        const res = await service.getPdfSrc({
-            uid: userStore.userInfo.uid,
-
-            resumeRecordId: jlId.value
-        });
-        if (res.code == 0) {
-            let downloadPdfUrl = res.data.downloadPdfUrl;
+        if (recordItem.value.payState == 1) {
+            if (recordItem.value?.downloadPdfUrl) {
+                push({
+                    url:
+                        "/pages/tjwx/viewPdf?pdf_url=" +
+                        recordItem.value?.downloadPdfUrl
+                });
+            } else {
+                const res = await service.getPdfSrc({
+                    uid: userStore.userInfo.uid,
+                    tempName: tempName.value,
+                    resumeRecordId: jlId.value
+                });
+                if (res.code == 0) {
+                    let downloadPdfUrl = res.data.downloadPdfUrl;
+                    recordItem.value.downloadPdfUrl = downloadPdfUrl;
+                    push({
+                        url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+                    });
+                }
+            }
+        } else {
             push({
-                url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+                url:
+                    "/pages/my/payProduct?jlId=" +
+                    jlId.value +
+                    "&tempName=" +
+                    tempName.value
             });
         }
+
         uni.hideLoading();
     };
     const downloadPdf = async () => {
-        const res = await service.getPdfSrc({
-            uid: userStore.userInfo.uid,
-
-            resumeRecordId: jlId.value
-        });
-        if (res.code == 0) {
-            let downloadPdfUrl = res.data.downloadPdfUrl;
-            com.copyMsg(downloadPdfUrl, true, "下载链接已复制");
-            // push({
-            //     url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
-            // });
+        if (recordItem.value.payState == 1) {
+            if (recordItem.value?.downloadPdfUrl) {
+                push({
+                    url:
+                        "/pages/tjwx/viewPdf?pdf_url=" +
+                        recordItem.value?.downloadPdfUrl
+                });
+            } else {
+                const res = await service.getPdfSrc({
+                    uid: userStore.userInfo.uid,
+                    tempName: tempName.value,
+                    resumeRecordId: jlId.value
+                });
+                if (res.code == 0) {
+                    let downloadPdfUrl = res.data.downloadPdfUrl;
+                    recordItem.value.downloadPdfUrl = downloadPdfUrl;
+                    com.copyMsg(downloadPdfUrl, true, "下载链接已复制");
+                    // push({
+                    //     url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+                    // });
+                }
+            }
+        } else {
+            push({
+                url:
+                    "/pages/my/payProduct?jlId=" +
+                    jlId.value +
+                    "&tempName=" +
+                    tempName.value
+            });
         }
+
+        // const res = await service.getPdfSrc({
+        //     uid: userStore.userInfo.uid,
+        //      tempName: tempName.value,
+        //     resumeRecordId: jlId.value
+        // });
+        // if (res.code == 0) {
+        //     let downloadPdfUrl = res.data.downloadPdfUrl;
+        //     com.copyMsg(downloadPdfUrl, true, "下载链接已复制");
+
+        //     push({
+        //         url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+        //     });
+        // }
         uni.hideLoading();
     };
     const temList = ref([
-        {},
         {
+            key: "azurill",
+            src: "/static/jianli/template/azurill.jpg",
+            name: "Azurill",
             isPick: true
         },
-        {}
+        {
+            key: "bronzor",
+            src: "/static/jianli/template/bronzor.jpg",
+            name: "Bronzor",
+            isPick: false
+        },
+        {
+            key: "chikorita",
+            src: "/static/jianli/template/chikorita.jpg",
+            name: "Chikorita",
+            isPick: false
+        },
+        {
+            key: "ditto",
+            src: "/static/jianli/template/ditto.jpg",
+            name: "Ditto",
+            isPick: false
+        },
+        {
+            key: "gengar",
+            src: "/static/jianli/template/gengar.jpg",
+            name: "Gengar",
+            isPick: false
+        },
+        {
+            key: "glalie",
+            src: "/static/jianli/template/glalie.jpg",
+            name: "Glalie",
+            isPick: false
+        },
+        {
+            key: "kakuna",
+            src: "/static/jianli/template/kakuna.jpg",
+            name: "Kakuna",
+            isPick: false
+        },
+        {
+            key: "leafish",
+            src: "/static/jianli/template/leafish.jpg",
+            name: "Leafish",
+            isPick: false
+        },
+        {
+            key: "nosepass",
+            src: "/static/jianli/template/nosepass.jpg",
+            name: "Nosepass",
+            isPick: false
+        },
+        {
+            key: "onyx",
+            src: "/static/jianli/template/onyx.jpg",
+            name: "Onyx",
+            isPick: false
+        },
+        {
+            key: "pikachu",
+            src: "/static/jianli/template/pikachu.jpg",
+            name: "Pikachu",
+            isPick: true
+        },
+        {
+            key: "rhyhorn",
+            src: "/static/jianli/template/rhyhorn.jpg",
+            name: "Rhyhorn",
+            isPick: false
+        }
     ]);
     const pickTem = (item) => {
+        if (recordItem.value?.downloadPdfUrl) {
+            return toast("已生成简历，不可修改模板");
+        }
         for (let v of temList.value) {
             v.isPick = false;
         }
         item.isPick = true;
     };
+    const selectedTemplate = computed(() => {
+        return temList.value.find((item) => item.isPick) || temList.value[0];
+    });
     const pform = ref([
         {
             label: "姓名",
@@ -2025,6 +2152,7 @@
     };
     const jlId = ref("");
     const lastTime = ref();
+    const recordItem = ref<any>({});
     const getJLDetail = async () => {
         // 获取简历详情
         let res = await service.getResumeInfo({
@@ -2036,6 +2164,9 @@
         };
         if (res.code == 0) {
             com.setItem("lastEditTime", com.format(new Date(), "hh:mm"));
+            if (res.data.record) {
+                recordItem.value = res.data.record;
+            }
             if (res.data.person) {
                 obj.personItem = op.$op("pform");
                 for (let v of obj.personItem) {
@@ -2230,7 +2361,13 @@
     };
     onShow((op) => {
         console.log(op);
-        refreshData();
+        let flag = com.getItem("payRefresh");
+        if (flag) {
+            com.setItem("payRefresh", false);
+            getJLDetail();
+        } else {
+            refreshData();
+        }
     });
     onMounted(() => {
         //

@@ -4,16 +4,52 @@ import { toast } from "@/common/toast";
 class Common {
     setItem(key, data) {
         try {
-            const jsonData = JSON.stringify(data);
+            // 检查数据类型，对不同类型进行不同处理
+            let jsonData;
+            if (typeof data === "string") {
+                // 字符串类型添加特殊前缀标记
+                jsonData = JSON.stringify({ __type: "string", value: data });
+            } else if (typeof data === "boolean") {
+                // 布尔类型添加特殊前缀标记
+                jsonData = JSON.stringify({ __type: "boolean", value: data });
+            } else if (data === null || data === undefined) {
+                // null或undefined直接存储
+                jsonData = JSON.stringify({ __type: "null", value: null });
+            } else {
+                // 对象类型正常存储
+                jsonData = JSON.stringify({ __type: "object", value: data });
+            }
             localStorage.setItem(key, jsonData);
         } catch (error) {
             console.error("Error storing data in localStorage:", error);
         }
     }
+
     getItem(key) {
         try {
             const jsonData = localStorage.getItem(key);
-            return jsonData ? JSON.parse(jsonData) : null;
+            if (!jsonData) return null;
+
+            const parsedData = JSON.parse(jsonData);
+
+            // 根据存储时的类型标记返回对应类型的数据
+            if (parsedData && parsedData.__type) {
+                switch (parsedData.__type) {
+                    case "string":
+                        return parsedData.value;
+                    case "boolean":
+                        return parsedData.value;
+                    case "null":
+                        return null;
+                    case "object":
+                        return parsedData.value;
+                    default:
+                        return parsedData.value;
+                }
+            }
+
+            // 兼容旧数据格式
+            return parsedData;
         } catch (error) {
             console.error("Error retrieving data from localStorage:", error);
             return null;
@@ -47,7 +83,7 @@ class Common {
         }
     };
     $op = (key: string) => {
-        let op: any = {
+        const op: any = {
             rgType: [
                 {
                     label: "首次注册赠送",
@@ -106,7 +142,7 @@ class Common {
         return key ? op[key] : op;
     };
     typesof = (type: any): string => {
-        let typeList: any = {};
+        const typeList: any = {};
         [
             "Boolean",
             "Number",
@@ -189,7 +225,7 @@ class Common {
     };
     checkLogin = (): boolean => {
         let flag = true;
-        let token = uni.getStorageSync("local_token");
+        const token = uni.getStorageSync("local_token");
         const appStore = useAppStore();
         if (!token) {
             flag = false;
@@ -228,7 +264,7 @@ class Common {
     };
     qs = (obj: AnyObject): string => {
         let str = "";
-        for (let k in obj) {
+        for (const k in obj) {
             if (str) {
                 str += "&";
             }
@@ -254,8 +290,8 @@ class Common {
             [x: string]: any;
         }
         (Date.prototype as any).Format = function (formatStr: string) {
-            var str = formatStr;
-            var Week = ["日", "一", "二", "三", "四", "五", "六"];
+            let str = formatStr;
+            const Week = ["日", "一", "二", "三", "四", "五", "六"];
 
             str = str.replace(/yyyy|YYYY/, this.getFullYear().toString());
             str = str.replace(
@@ -313,7 +349,7 @@ class Common {
     };
     setShareParams = (options: any) => {
         if (options.q) {
-            let shareParams = {
+            const shareParams = {
                 eid: "",
                 sharePackId: "",
                 obtainPackId: "",
@@ -323,7 +359,7 @@ class Common {
                 ori: "",
                 url: ""
             };
-            let url = decodeURIComponent(options.q);
+            const url = decodeURIComponent(options.q);
             console.log(url);
             shareParams.url = url;
             shareParams.eid = this.getQueryParam(url, "eid");
@@ -368,9 +404,9 @@ class Common {
         console.log(act);
 
         act.url = act.url || act.actLink;
-        let item = act;
+        const item = act;
 
-        let url = item.url;
+        const url = item.url;
         if (act.actType || act.actType === 0 || act.actType === "0") {
             switch (act.actType) {
                 case 0:
@@ -538,7 +574,7 @@ class Common {
 }
 class Options {
     $op = (key: string) => {
-        let op: any = {
+        const op: any = {
             pform: [
                 {
                     label: "姓名",

@@ -13,7 +13,7 @@
         "dev:app": "uni -p app",
         "app": "esno cli/cli.ts run -p app",
         "dev:app-android": "uni -p app-android",
-        "app-android": "esno cli/cli.ts -p app-android",
+        "app-android": "esno cli/cli.ts run -p app-android",
         "dev:app-ios": "uni -p app-ios",
         "dev:custom": "uni -p",
         "dev:h5": "esno cli/cli.ts run -p h5",
