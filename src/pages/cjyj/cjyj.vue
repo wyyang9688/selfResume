@@ -34,10 +34,9 @@
                     class="itemBox m20"
                     v-for="(item, index) in list"
                     :key="index"
-                    @click="goToEdit(item)"
                 >
                     <div class="item">
-                        <div class="imgBox">
+                        <div class="imgBox" @click="goToEdit(item)">
                             <image
                                 class="resImg sd"
                                 :src="
@@ -49,7 +48,15 @@
                             />
                         </div>
                         <div class="name">产品锦鲤简历</div>
-                        <div class="time">{{ item.updateTime }}编辑</div>
+                        <div class="time flex justify-between">
+                            {{ item.updateTime }}编辑
+                            <div
+                                class="del text-red-500"
+                                @click="delResume(item)"
+                            >
+                                删除
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +69,7 @@
         <!-- <gc @login="onLogin" /> -->
 
         <!-- <feed ref="feedRef" @receiveMsg="receiveMsg" /> -->
-        <tabbar />
+        <!-- <tabbar /> -->
     </div>
 </template>
 
@@ -98,6 +105,17 @@
         push({
             url: "/pages/resume/resume?id=" + item.id
         });
+    };
+    const delResume = async (item) => {
+        const res = await service.delHistoryList({
+            resumeRecordId: item.id,
+            delFlag: 1,
+            uid: userStore.userInfo.uid
+        });
+        if (res.code == 0) {
+            toast("删除成功");
+            getHistoryList();
+        }
     };
     const feedRef = ref<any>(null);
     const receiveMsg = (msg) => {

@@ -95,6 +95,7 @@
         </div>
         <div class="floatBtm sd">
             <div
+                @click="reCreatePdf"
                 class="msg"
                 style="
                     font-family: Roboto;
@@ -1861,6 +1862,22 @@
         person: {}
     });
     const tempName = computed(() => selectedTemplate.value.key);
+    const reCreatePdf = async () => {
+        return;
+        const res = await service.getPdfSrc({
+            uid: userStore.userInfo.uid,
+            tempName: tempName.value,
+            resumeRecordId: jlId.value
+        });
+        if (res.code == 0) {
+            let downloadPdfUrl = res.data.downloadPdfUrl;
+            recordItem.value.downloadPdfUrl = downloadPdfUrl;
+            com.copyMsg(downloadPdfUrl, true, "下载链接已复制");
+            // push({
+            //     url: "/pages/tjwx/viewPdf?pdf_url=" + downloadPdfUrl
+            // });
+        }
+    };
     const openPdf = async () => {
         if (recordItem.value.payState == 1) {
             if (recordItem.value?.downloadPdfUrl) {

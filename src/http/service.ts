@@ -31,6 +31,17 @@ export interface RegParams {
     gender?: string | number;
 }
 class Service {
+    async delHistoryList(data: any) {
+        const serviceData = await ajax.post<AnyObject>(
+            `/api/resume/info/resumerecord`,
+            data,
+            data,
+            {
+                showToast: true
+            }
+        );
+        return serviceData.data;
+    }
     async getHistoryList(data: any) {
         const serviceData = await ajax.post<AnyObject>(
             `/api/resume/info/resumerecord`,

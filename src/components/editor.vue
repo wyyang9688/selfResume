@@ -170,10 +170,10 @@
                         class="iconfont icon-fengexian"
                         @tap="insertDivider"
                     ></div>
-                    <div
+                    <!-- <div
                         class="iconfont icon-charutupian"
                         @tap="insertImage"
-                    ></div>
+                    ></div> -->
                     <div
                         :class="formats.header === 1 ? 'ql-active' : ''"
                         class="iconfont icon-format-header-1"

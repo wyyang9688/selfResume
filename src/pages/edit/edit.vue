@@ -549,12 +549,21 @@
         if (showKey.value == "person") {
             console.log("个人信息");
             console.log(pform.value);
+            // 添加个人信息必填项校验
+            const emptyFields = pform.value.filter(
+                (item) => !item.val || item.val.trim() === ""
+            );
+            if (emptyFields.length > 0) {
+                toast(`请填写${emptyFields[0].label}`);
+                return;
+            }
             obj.personItem = pform.value;
             com.setItem("headerSrc", headerSrc.value);
             let params = changeFormDataToSeverData(pform.value);
             if (headerSrc.value) {
                 params.picture = headerSrc.value;
             }
+
             res = await service.savePersonInfo({
                 uid: userStore.userInfo.uid,
                 resumeRecordId: obj.id,
@@ -738,21 +747,21 @@
         try {
             com.onMsg(async (e: any) => {
                 if (e.src) {
+                    let pre = config!.BASE_URL;
+                    if (pre == "/proxy") {
+                        pre = "http://172.16.8.80:8089";
+                    }
                     fileList.value.push({
-                        url:
-                            config!.BASE_URL +
-                            "/api/image/" +
-                            JSON.parse(e.src).data,
+                        url: pre + "/api/image/" + JSON.parse(e.src).data,
                         name: JSON.parse(e.src).data
                     });
                     com.cs(JSON.stringify(fileList.value));
                     console.log(fileList.value);
                     headerSrc.value =
-                        config!.BASE_URL +
-                        "/api/image/" +
-                        JSON.parse(e.src).data;
+                        pre + "/api/image/" + JSON.parse(e.src).data;
                     console.log("headerSrc.value");
                     console.log(headerSrc.value);
+                    com.cs(headerSrc.value);
                 }
             });
             com.sendMsg("cImg", {
@@ -915,6 +924,7 @@
 
             console.log(pformAdd);
             if (pformAdd) {
+                if (pformAdd.picture) headerSrc.value = pformAdd.picture;
                 for (let v of pform.value) {
                     for (let vv of pformAdd) {
                         if (v.label == vv.label) {

@@ -625,6 +625,13 @@ class Options {
                     placeholder: "请输入电子邮箱"
                 },
                 {
+                    label: "家庭住址",
+                    type: "input",
+                    val: "",
+                    key: "address",
+                    placeholder: "请输入家庭住址"
+                },
+                {
                     label: "期望职位",
                     type: "input",
                     val: "",
@@ -882,27 +889,27 @@ class Options {
                 // placeholder: "请输入担任角色"
                 // },
                 {
-                    label: "熟练程度（5为最高等级）",
+                    label: "熟练程度",
                     type: "options",
                     op: [
                         {
-                            label: "1",
+                            label: "了解",
                             value: "1"
                         },
                         {
-                            label: "2",
+                            label: "入门",
                             value: "2"
                         },
                         {
-                            label: "3",
+                            label: "熟悉",
                             value: "3"
                         },
                         {
-                            label: "4",
+                            label: "熟练",
                             value: "4"
                         },
                         {
-                            label: "5",
+                            label: "精通",
                             value: "5"
                         }
                     ],
