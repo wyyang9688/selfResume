@@ -231,7 +231,7 @@
                 <div class="section-title">求职意向</div>
                 <div class="job-intention">
                     <div class="job-intention-item">
-                        期望职位：<span th:text="${persion.desiredPosition}"
+                        期望职位：<span th:text="${persion.jobTitle}"
                             >Web开发</span
                         >
                     </div>
@@ -241,7 +241,7 @@
                         >
                     </div>
                     <div class="job-intention-item">
-                        薪资要求：<span th:text="${persion.expectedSalary}"
+                        薪资要求：<span th:text="${persion.salaryExpectation}"
                             >1W</span
                         >
                     </div>
@@ -266,22 +266,19 @@
 
                 <div
                     class="experience-item"
-                    th:if="${experience == null || #lists.isEmpty(experience)}"
+                   th:each="exp,iterStat : ${experience}"
                 >
-                    <div class="company-name">技术先锋</div>
-                    <div class="job-date">2016年6月至2018年12月</div>
-                    <div class="job-position">Web开发人员</div>
-                    <div class="job-location">加利福尼亚旧金山湾</div>
+                    <div class="company-name" th:text="${exp.companyName}">技术先锋</div>
+                    <div class="job-date">
+                            <span th:text="${exp.startDate}">2019 年 1 月</span>至<span th:if="${exp.endDate} == null">今</span>
+                            <span th:if="${exp.endDate} != null"th:text="${exp.endDate}"></span>
+                    </div>
+                    <div class="job-position" th:text="${exp.jobTitle}">Web开发人员</div>
+                    <div class="job-location" th:text="${exp.location}">加利福尼亚旧金山湾</div>
                     <div class="job-description">
                         <ul>
-                            <li>
-                                与10人团队合作，使用React.js和Node.js开发高质量的web应用程序。
-                            </li>
-                            <li>
-                                管理第三方服务的集成，例如：Stripe用于支付，Twilio用于短信服务。
-                            </li>
-                            <li>
-                                优化了应用程序性能，实现了30%的加载时间减少。
+                            <li th:utext="${exp.description}">
+                                                                                                         与10人团队合作，使用React.js和Node.js开发高质量的web应用程序。
                             </li>
                         </ul>
                     </div>
@@ -295,7 +292,7 @@
                     class="education-item"
                 >
                     <div class="school-info">
-                        <div class="school-name" th:text="${edu.schoolName}">
+                        <div class="school-name" th:text="${edu.institutionName}">
                             加州大学
                         </div>
                         <div
@@ -313,16 +310,7 @@
                     </div>
                 </div>
 
-                <div
-                    class="education-item"
-                    th:if="${education == null || #lists.isEmpty(education)}"
-                >
-                    <div class="school-info">
-                        <div class="school-name">加州大学</div>
-                        <div class="degree">加州伯克利 | 计算机科学学士</div>
-                    </div>
-                    <div class="education-date">2012年8月至2016年5月</div>
-                </div>
+               
             </div>
 
             <div class="section">
@@ -342,27 +330,7 @@
                     </div>
                 </div>
 
-                <div
-                    class="project-item"
-                    th:if="${projects == null || #lists.isEmpty(projects)}"
-                >
-                    <div class="project-title">电子商务平台</div>
-                    <div class="project-role">项目负责人</div>
-                    <div class="project-description">
-                        领导开发了一个全栈电子商务平台，提高了销售转化率25%。
-                    </div>
-                </div>
 
-                <div
-                    class="project-item"
-                    th:if="${projects == null || #lists.isEmpty(projects)}"
-                >
-                    <div class="project-title">交互式仪表板</div>
-                    <div class="project-role">前端开发人员</div>
-                    <div class="project-description">
-                        为SaaS应用程序创建了交互式分析仪表板，提升了客户的数据可视化展示效果。
-                    </div>
-                </div>
             </div>
 
             <div class="section">
@@ -381,21 +349,6 @@
                         >2020</span
                     >
                 </div>
-
-                <div
-                    class="cert-item"
-                    th:if="${certificates == null || #lists.isEmpty(certificates)}"
-                >
-                    <span class="cert-name">全栈Web开发</span>
-                    <span class="cert-year">2020</span>
-                </div>
-                <div
-                    class="cert-item"
-                    th:if="${certificates == null || #lists.isEmpty(certificates)}"
-                >
-                    <span class="cert-name">AWS认证开发人员</span>
-                    <span class="cert-year">2019</span>
-                </div>
             </div>
 
             <div class="section">
@@ -404,81 +357,15 @@
                     th:each="skill,iterStat : ${skills}"
                     class="skill-category"
                 >
-                    <div class="skill-title" th:text="${skill.category}">
+                    <div class="skill-title" th:text="${skill.skillName}">
                         网络技术
                     </div>
-                    <div class="skill-level" th:text="${skill.level}">精通</div>
-                    <div class="skill-list" th:text="${skill.items}">
+                    <div class="skill-level" th:text="${skill.proficiencyLevel}">精通</div>
+                    <div class="skill-list" th:text="${skill.skillKeywords}">
                         HTML5, JavaScript, PHP, Python
                     </div>
                 </div>
-
-                <div
-                    class="skill-category"
-                    th:if="${skills == null || #lists.isEmpty(skills)}"
-                >
-                    <div class="skill-title">Web框架</div>
-                    <div class="skill-level">熟练</div>
-                    <div class="skill-list">
-                        React.js, Angular, Vue.js, Laravel, Django
-                    </div>
-                </div>
-                <div
-                    class="skill-category"
-                    th:if="${skills == null || #lists.isEmpty(skills)}"
-                >
-                    <div class="skill-title">工具</div>
-                    <div class="skill-level">熟练</div>
-                    <div class="skill-list">
-                        Webpack, Git, Jenkins, Docker, JIRA
-                    </div>
-                </div>
             </div>
-            <!--
-            <div
-                class="section"
-                th:if="${interests != null && !#lists.isEmpty(interests)}"
-            >
-                <div class="section-title">兴趣爱好</div>
-                <div class="summary">
-                    <span
-                        th:each="interest,iterStat : ${interests}"
-                        th:text="${interest.name} + (${iterStat.last} ? '' : '、')"
-                    >
-                        摄影、旅行、编程、阅读
-                    </span>
-                </div>
-            </div>
-
-            <div
-                class="section"
-                th:if="${interests == null || #lists.isEmpty(interests)}"
-            >
-                <div class="section-title">兴趣爱好</div>
-                <div class="summary">摄影、旅行、编程、阅读</div>
-            </div>
-
-            <div
-                class="section"
-                th:if="${additionalInfo != null && !#lists.isEmpty(additionalInfo)}"
-            >
-                <div class="section-title">附加信息</div>
-                <div
-                    class="summary"
-                    th:each="info,iterStat : ${additionalInfo}"
-                    th:text="${info.content}"
-                >
-                    可以立即入职，愿意出差和加班。
-                </div>
-            </div>
-
-            <div
-                class="section"
-                th:if="${additionalInfo == null || #lists.isEmpty(additionalInfo)}"
-            >
-                <div class="section-title">附加信息</div>
-                <div class="summary">可以立即入职，愿意出差和加班。</div>
-            </div>  -->
         </div>
     </body>
 </html>

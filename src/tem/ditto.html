@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -267,7 +267,7 @@
             </div>
             <div class="contact-item">
                 <i class="fas fa-birthday-cake"></i>
-                <span th:text="${persion.age}">26岁</span>
+                <span th:text="${persion.dateOfBirth}">2020-01-01</span>
             </div>
             <div class="contact-item">
                 <i class="fas fa-phone"></i>
@@ -277,10 +277,10 @@
                 <i class="fas fa-envelope"></i>
                 <span th:text="${persion.email}">john.doe@gmail.com</span>
             </div>
-            <div class="contact-item">
+            <!-- <div class="contact-item">
                 <i class="fas fa-globe"></i>
                 <span th:text="${persion.website}">https://johndoe.me/</span>
-            </div>
+            </div> -->
         </div>
 
         <div class="main-content">
@@ -292,7 +292,7 @@
                             <div class="skill-category-title">期望职位:</div>
                             <div
                                 class="skill-items"
-                                th:text="${persion.desiredPosition}"
+                                th:text="${persion.jobTitle}"
                             >
                                 Web开发
                             </div>
@@ -310,7 +310,7 @@
                             <div class="skill-category-title">期望薪资:</div>
                             <div
                                 class="skill-items"
-                                th:text="${persion.expectedSalary}"
+                                th:text="${persion.salaryExpectation}"
                             >
                                 1W
                             </div>
@@ -405,12 +405,7 @@
                                 >
                                     创意与创新型网页开发者
                                 </div>
-                                <div
-                                    class="job-url"
-                                    th:text="${exp.companyUrl}"
-                                >
-                                    https://creativesolutions.inc/
-                                </div>
+                               
                             </div>
                             <div class="job-header-right">
                                 <div class="job-date">
@@ -438,21 +433,8 @@
                         >
                             主导了主要产品的重新设计，使用户参与度提高了40%。
                         </div>
-                        <div
-                            class="job-description"
-                            th:if="${exp.description2 != null}"
-                            th:utext="${exp.description2}"
-                        >
-                            开发并实施了新的响应式布局，提升了网站访客性。
-                        </div>
-                        <div
-                            class="job-description"
-                            th:if="${exp.description3 != null}"
-                            th:utext="${exp.description3}"
-                        >
-                            指导了一个由 4
-                            名初级开发者组成的团队，培养了过硬的技术团队文化。
-                        </div>
+                        
+                       
                     </div>
                 </div>
 
@@ -518,16 +500,6 @@
                         >
                             主导开发了一个全栈电商平台，使销售转化率提高了25%。
                         </div>
-                        <div
-                            class="job-description"
-                            th:if="${proj.description2 != null}"
-                            th:text="${proj.description2}"
-                        ></div>
-                        <div
-                            class="job-description"
-                            th:if="${proj.description3 != null}"
-                            th:text="${proj.description3}"
-                        ></div>
                     </div>
                 </div>
             </div>

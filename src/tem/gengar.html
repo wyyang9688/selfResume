@@ -267,15 +267,11 @@
                         <div class="skill-category">
                             <div class="skill-category-title">
                                 <span th:text="${obj.skillName}">网络技术</span>
-                                <span th:text="${obj.proficiencyLevel}"
-                                    >精通</span
+                                <span th:text="${obj.proficiencyLevel}">精通</span
                                 >
                             </div>
-                            <div
-                                class="skill-items"
-                                th:utext="${obj.skillKeywords}"
-                            >
-                                精通 HTML5、JavaScript、PHP、Python
+                            <div class="skill-items"  th:utext="${obj.skillKeywords}">
+                                      HTML5、JavaScript、PHP、Python
                             </div>
                         </div>
                     </div>
@@ -355,6 +351,7 @@
                         >
                             主导了主要产品的重新设计，使用户参与度提高了40%。
                         </div>
+                        
                     </div>
                 </div>
 

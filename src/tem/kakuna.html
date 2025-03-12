@@ -244,7 +244,7 @@
                     </div>
                     <div class="personal-info-item">
                         薪资要求:
-                        <span th:text="${persion.expectedSalary}">18K</span>
+                        <span th:text="${persion.salaryExpectation}">18K</span>
                     </div>
                     <div class="personal-info-item">
                         期望工作地点:
@@ -283,12 +283,8 @@
                             创意与创新型网页开发者
                         </div>
                         <div class="job-date">
-                            <span th:text="${exp.startDate}">2019 年 1 月</span
-                            >至<span th:if="${exp.endDate} == null">今</span
-                            ><span
-                                th:if="${exp.endDate} != null"
-                                th:text="${exp.endDate}"
-                            ></span>
+                            <span th:text="${exp.startDate}">2019 年 1 月</span>至<span th:if="${exp.endDate} == null">今</span>
+                            <span th:if="${exp.endDate} != null"th:text="${exp.endDate}"></span>
                         </div>
                     </div>
                     <div class="job-location" th:text="${exp.location}">
@@ -297,41 +293,9 @@
                     <div class="job-description" th:utext="${exp.description}">
                         带头重新设计主要产品网站，使用户参与度提高了40%。
                     </div>
-                    <div
-                        class="job-description"
-                        th:if="${exp.description2 != null}"
-                        th:utext="${exp.description2}"
-                    >
-                        开发并实施了新的响应框架，提高了跨设备兼容性。
-                    </div>
-                    <div
-                        class="job-description"
-                        th:if="${exp.description3 != null}"
-                        th:utext="${exp.description3}"
-                    >
-                        指导由四名初级开发人员组成的团队，培养卓越的技术文化。
-                    </div>
                 </div>
 
-                <div class="experience">
-                    <div class="company-row">
-                        <div class="company-name">技术先锋公司</div>
-                        <div class="job-title">Web开发人员</div>
-                        <div class="job-date">2016 年 6 月至 2018 年 12 月</div>
-                    </div>
-                    <div class="job-location">加利福尼亚州圣何塞</div>
-                    <div class="job-description">
-                        在一个 10 人团队中协作，使用 React.js 和 Node.js
-                        开发高质量的 web 应用程序。
-                    </div>
-                    <div class="job-description">
-                        管理第三方服务的集成，如支付的 Stripe 和短信服务的
-                        Twilio。
-                    </div>
-                    <div class="job-description">
-                        优化的应用程序性能，实现了减少30%的加载时间。
-                    </div>
-                </div>
+              
             </div>
 
             <div class="section">
@@ -339,11 +303,9 @@
 
                 <div class="education" th:each="edu,iterStat : ${education}">
                     <div class="school-name" th:text="${edu.institutionName}">
-                        加州大学
+                                                                            加州大学
                     </div>
-                    <div class="school-location" th:text="${edu.location}">
-                        加州伯克利
-                    </div>
+                   
                     <div class="education-date">
                         <span th:text="${edu.startDate}">2012 年 8 月</span
                         >至<span th:text="${edu.endDate}">2016 年 5 月</span>
@@ -360,24 +322,17 @@
 
                 <div class="project" th:each="proj,iterStat : ${projects}">
                     <div class="project-title" th:text="${proj.projectName}">
-                        电子商务平台
+                                                                        电子商务平台
                     </div>
                     <div class="project-role" th:text="${proj.role}">
-                        项目负责人
+                                                                               项目负责人
                     </div>
                     <div class="job-description" th:text="${proj.description}">
-                        主导开发全栈电商平台，提升销售转化率25%。
+                                                            主导开发全栈电商平台，提升销售转化率25%。
                     </div>
                 </div>
 
-                <div class="project">
-                    <div class="project-title">交互式仪表板</div>
-                    <div class="project-role">前端开发人员</div>
-                    <div class="job-description">
-                        为 SaaS
-                        应用程序创建了一个交互式分析仪表板，增强了客户的数据可视化能力。
-                    </div>
-                </div>
+               
             </div>
 
             <div class="section">
@@ -387,56 +342,33 @@
                     class="certification"
                     th:each="cert,iterStat : ${certifications}"
                 >
-                    <div
-                        class="certification-name"
-                        th:text="${cert.certificationName}"
-                    >
-                        全栈开发
+                    <div   class="certification-name" th:text="${cert.certificationName}">
+                                                                                 全栈开发
                     </div>
                     <div class="certification-year" th:text="${cert.issueDate}">
                         2020
                     </div>
                 </div>
 
-                <div class="certification">
-                    <div class="certification-name">AWS 认证开发人员</div>
-                    <div class="certification-year">2019</div>
-                </div>
+               
             </div>
 
             <div class="section">
                 <h2 class="section-title">技能</h2>
 
-                <div class="skills-container">
+                <div class="skills-container" th:each="obj,iterStat : ${skills}">
                     <div class="skills-column">
-                        <div class="skills-category">网络技术</div>
-                        <div
-                            class="skills-list"
-                            th:text="${skills[0].skillKeywords}"
-                        >
-                            精通 HTML5, JavaScript, PHP, Python
+                        <div class="skills-category"><span th:text="${obj.skillName}">网络技术</span></div>
+                        <div  class="skills-list" >
+                        <span th:text="${obj.proficiencyLevel}">精通</span>
+                          <span  th:utext="${obj.skillKeywords}">                                        
+                          HTML5, JavaScript, PHP, Python</span>
                         </div>
                     </div>
 
-                    <div class="skills-column">
-                        <div class="skills-category">Web 框架</div>
-                        <div
-                            class="skills-list"
-                            th:text="${skills[1].skillKeywords}"
-                        >
-                            中级 React.js, Angular, Vue.js, Laravel, Django
-                        </div>
-                    </div>
+                  
 
-                    <div class="skills-column">
-                        <div class="skills-category">工具</div>
-                        <div
-                            class="skills-list"
-                            th:text="${skills[2].skillKeywords}"
-                        >
-                            中级 Webpack, Git, Jenkins, Docker, JIRA
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>
