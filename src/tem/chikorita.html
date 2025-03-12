@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>个人简历</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Microsoft YaHei", sans-serif;
+            }
+            body {
+                background-color: #fff;
+                color: #333;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .resume-container {
+                width: 100%;
+                border: 1px solid #ccc;
+                overflow: hidden;
+            }
+            .header {
+                padding: 20px;
+                overflow: hidden;
+
+                border-bottom: 1px solid #ddd;
+            }
+            .avatar {
+                float: left;
+                width: 138px;
+                height: 138px;
+                margin-right: 20px;
+                background-color: #ccc;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+            }
+            .header-info {
+                float: left;
+            }
+            .header-info h1 {
+                font-size: 24px;
+                color: #008080;
+            }
+            .header-info p {
+                font-size: 16px;
+                color: #333;
+            }
+            .contact-info {
+                clear: both;
+            }
+            .contact-item {
+                color: #008080;
+            }
+            .contact-item i {
+                width: 20px;
+                text-align: center;
+                margin-right: 5px;
+            }
+            .main-content {
+                overflow: hidden;
+                position: relative;
+            }
+            .left-column {
+                float: left;
+                width: 70%;
+                padding: 20px;
+            }
+            .right-column {
+                float: left;
+                width: 30%;
+                padding: 20px;
+                background-color: #008080;
+                color: white;
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+            .section {
+                margin-bottom: 25px;
+            }
+            .section-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #333;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+            .right-column .section-title {
+                color: white;
+                border-bottom: 1px solid #fff;
+            }
+            .job-item {
+                margin-bottom: 20px;
+            }
+            .company-name {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+            .job-title {
+                color: #008080;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            .job-url {
+                color: #008080;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            .job-date {
+                color: #666;
+                font-size: 14px;
+                float: right;
+                white-space: nowrap;
+            }
+            .job-location {
+                color: #666;
+                font-size: 14px;
+                float: right;
+                clear: right;
+            }
+            .job-description {
+                color: #666;
+                padding-left: 15px;
+                position: relative;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            .job-description:before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: #008080;
+            }
+            .skill-list {
+                list-style: none;
+            }
+            .skill-category {
+                margin-bottom: 10px;
+            }
+            .skill-category-title {
+                font-weight: bold;
+                margin-bottom: 3px;
+                font-size: 14px;
+            }
+            .skill-items {
+                font-size: 14px;
+            }
+            .education-item {
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+            .education-left {
+                float: left;
+                width: 70%;
+            }
+            .education-right {
+                float: right;
+                width: 30%;
+                text-align: right;
+            }
+            .project-item {
+                margin-bottom: 20px;
+            }
+            .project-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+            .project-role {
+                color: #008080;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            .job-header {
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+            .job-header-left {
+                float: left;
+                width: 60%;
+            }
+            .job-header-right {
+                float: right;
+                width: 40%;
+                text-align: right;
+            }
+            .intention-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .intention-table td {
+                padding: 5px;
+                border: none;
+            }
+            .intention-table tr td:first-child {
+                width: 30%;
+                font-weight: bold;
+            }
+            .certification {
+                margin-top: 20px;
+            }
+            .certification-item {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="resume-container">
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="header">
+                        <div class="avatar">
+                            <img
+                                src="https://randomuser.me/api/portraits/men/75.jpg"
+                                alt="头像"
+                            />
+                        </div>
+                        <div class="header-info">
+                            <h1>李先生</h1>
+                            <p>富有创意和创新精神的Web开发人员</p>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-mars"></i> 男
+                                    <span style="margin-left: 20px"
+                                        ><i class="fas fa-birthday-cake"></i>
+                                        26岁</span
+                                    >
+                                    <i
+                                        class="fas fa-phone"
+                                        style="margin-left: 5px"
+                                    ></i>
+                                    13711111115
+                                </div>
+
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    john.doe@gmail.com
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-globe"></i>
+                                    https://johndoe.me/
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h2 class="section-title">求职意向</h2>
+                        <table class="intention-table">
+                            <tr>
+                                <td>期望职位：</td>
+                                <td>Web开发</td>
+                                <td>意向城市：</td>
+                                <td>北京</td>
+                            </tr>
+                            <tr>
+                                <td>期望薪资：</td>
+                                <td>1W</td>
+                                <td>求职状态：</td>
+                                <td>在职</td>
+                            </tr>
+                            <tr>
+                                <td>政治面貌：</td>
+                                <td>党员</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">总结</h2>
+                        <p>
+                            拥有 5
+                            年经验的创新型网页开发者，擅长构建具有影响力且用户体验良好的网站和应用程序，精通前端技术，热衷于当前现代网页标准和前沿开发技术。有成功所领导项目从构思到部署的可靠记录。
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">工作经历</h2>
+                        <div class="job-item">
+                            <div class="job-header">
+                                <div class="job-header-left">
+                                    <div class="company-name">
+                                        创意解决方案公司
+                                    </div>
+                                    <div class="job-title">
+                                        创意与创新型网页开发者
+                                    </div>
+                                    <div class="job-url">
+                                        https://creativesolutions.inc/
+                                    </div>
+                                </div>
+                                <div class="job-header-right">
+                                    <div class="job-date">2019 年 1 月至今</div>
+                                    <div class="job-location">湖南长沙</div>
+                                </div>
+                            </div>
+                            <div class="job-description">
+                                主导了主要产品的重新设计，使用户参与度提高了40%。
+                            </div>
+                            <div class="job-description">
+                                开发并实施了新的响应式布局，提升了网站访客性。
+                            </div>
+                            <div class="job-description">
+                                指导了一个由 4
+                                名初级开发者组成的团队，培养了过硬的技术团队文化。
+                            </div>
+                        </div>
+
+                        <div class="job-item">
+                            <div class="job-header">
+                                <div class="job-header-left">
+                                    <div class="company-name">技术先锋公司</div>
+                                    <div class="job-title">高级网页开发者</div>
+                                    <div class="job-url">
+                                        https://creativesolutions.inc/
+                                    </div>
+                                </div>
+                                <div class="job-header-right">
+                                    <div class="job-date">
+                                        2016 年 6 月 - 2018 年 12 月
+                                    </div>
+                                    <div class="job-location">湖南长沙</div>
+                                </div>
+                            </div>
+                            <div class="job-description">
+                                在一个10人团队中协作，使用React.js和Node.js开发高质量的网页应用程序。
+                            </div>
+                            <div class="job-description">
+                                负责集成第三方服务，如支付服务Stripe和短信服务Twilio。
+                            </div>
+                            <div class="job-description">
+                                优化应用程序性能，使加载时间减少了30%。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">教育经历</h2>
+                        <div class="education-item">
+                            <div class="education-left">
+                                <div class="company-name">
+                                    加州福尼亚大学伯克利分校
+                                </div>
+                                <div class="job-title">
+                                    计算机科学专业 | 本科 学士学位
+                                </div>
+                            </div>
+                            <div class="education-right">
+                                <div class="job-date">
+                                    2012 年 8 月 - 2016 年 5 月
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">项目</h2>
+                        <div class="project-item">
+                            <div class="project-title">电商平台</div>
+                            <div class="project-role">
+                                全栈网页开发项目负责人
+                            </div>
+                            <div class="job-description">
+                                主导开发了一个全栈电商平台，使销售转化率提高了25%。
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-title">交互式仪表盘</div>
+                            <div class="project-role">前端开发者</div>
+                            <div class="job-description">
+                                为一款软件即服务（SaaS）应用程序创建了交互式分析表盘，提升了为客户提供数据可视化展示的效果。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="section">
+                        <h2 class="section-title">技能</h2>
+                        <div class="skill-list">
+                            <div class="skill-category">
+                                <div class="skill-category-title">
+                                    网络技术:
+                                </div>
+                                <div class="skill-items">
+                                    精通 HTML5、JavaScript、PHP、Python
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <div class="skill-category-title">
+                                    网络框架:
+                                </div>
+                                <div class="skill-items">
+                                    熟悉
+                                    React.js、Angular、Vue.js、Laravel、Django
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <div class="skill-category-title">工具:</div>
+                                <div class="skill-items">
+                                    熟练使用
+                                    Webpack、Git、Jenkins、Docker、JIRAW
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">认证</h2>
+                        <div class="certification">
+                            <div class="certification-item">
+                                2020年编程学院全栈 Web 开发认证
+                            </div>
+                            <div class="certification-item">
+                                2019年亚马逊网络服务 AWS 认证
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

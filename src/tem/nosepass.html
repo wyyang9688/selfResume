@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>个人简历</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Microsoft YaHei", "SimSun", sans-serif;
+            }
+            body {
+                width: 100%;
+                background-color: #fff;
+                color: #333;
+                font-size: 14px;
+            }
+            .resume-container {
+                width: 800px;
+                margin: 0 auto;
+                background-color: #fff;
+                border: 1px solid #ccc;
+            }
+            .header {
+                padding: 20px;
+                border-bottom: 2px solid #4682b4;
+                overflow: hidden;
+                background-color: #f9f9f9;
+            }
+            .europass-logo {
+                float: left;
+                width: 150px;
+            }
+            .europass-logo img {
+                width: 100%;
+            }
+            .resume-title {
+                float: right;
+                font-size: 24px;
+                color: #4682b4;
+                margin-top: 10px;
+                font-weight: bold;
+                border-bottom: 2px solid #4682b4;
+                padding-bottom: 5px;
+            }
+            .personal-info-title {
+                width: 150px;
+                float: left;
+                color: #4682b4;
+                padding: 20px;
+                text-align: right;
+                font-weight: bold;
+                position: relative;
+            }
+            .personal-info-title:after {
+                content: "";
+                position: absolute;
+                top: 20px;
+                right: 0;
+                width: 3px;
+                height: calc(100% - 40px);
+                background-color: #4682b4;
+                display: none;
+            }
+            .section-title {
+                width: 150px;
+                float: left;
+                color: #4682b4;
+                padding: 20px;
+                text-align: right;
+                font-weight: bold;
+                position: relative;
+            }
+            .section-title:after {
+                content: "";
+                position: absolute;
+                top: 20px;
+                right: 0;
+                width: 3px;
+                height: calc(100% - 40px);
+                background-color: #4682b4;
+                display: none;
+            }
+            .personal-info-content {
+                margin-left: 150px;
+                padding: 20px;
+            }
+            .avatar {
+                float: left;
+                width: 80px;
+                height: 80px;
+                margin-right: 20px;
+                border: 2px solid #4682b4;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+            }
+            .name {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #4682b4;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 5px;
+            }
+            .job-title {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            .contact-info {
+                margin-top: 10px;
+                padding-left: 101px;
+            }
+            .contact-item {
+                margin-bottom: 5px;
+            }
+            .section {
+                clear: both;
+                overflow: hidden;
+                border-bottom: 1px solid transplate;
+            }
+            .section:last-child {
+                border-bottom: none;
+            }
+            .section-content {
+                margin-left: 150px;
+                padding: 20px;
+            }
+            .info-table {
+                width: 100%;
+                border-collapse: collapse;
+                border: none;
+            }
+            .info-table td {
+                padding: 5px;
+                border: none;
+            }
+            .info-table td:first-child {
+                width: 100px;
+                font-weight: bold;
+            }
+            .summary {
+                line-height: 1.6;
+                text-indent: 2em;
+            }
+            .experience-item {
+                margin-bottom: 20px;
+            }
+            .experience-date {
+                color: #666;
+                margin-bottom: 5px;
+                border-left: 3px solid #4682b4;
+                padding-left: 10px;
+            }
+            .company-name {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .job-position {
+                color: #666;
+            }
+            .job-location {
+                color: #666;
+            }
+            .job-description-list {
+                margin-top: 10px;
+                list-style-type: none;
+            }
+            .job-description-list li {
+                position: relative;
+                padding-left: 15px;
+                margin-bottom: 5px;
+            }
+            .job-description-list li:before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: #4682b4;
+            }
+            .education-item {
+                margin-bottom: 20px;
+            }
+            .education-date {
+                color: #666;
+                margin-bottom: 5px;
+                border-left: 3px solid #4682b4;
+                padding-left: 10px;
+            }
+            .school-name {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .degree {
+                color: #666;
+            }
+            .project-item {
+                margin-bottom: 20px;
+            }
+            .project-title {
+                font-weight: bold;
+                font-size: 16px;
+                border-left: 3px solid #4682b4;
+                padding-left: 10px;
+            }
+            .project-role {
+                color: #666;
+                margin-bottom: 5px;
+            }
+            .project-description {
+                margin-top: 5px;
+            }
+            .certificate-item {
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+                border-bottom: 1px dashed #eee;
+            }
+            .certificate-item:last-child {
+                border-bottom: none;
+            }
+            .certificate-year {
+                float: right;
+                color: #4682b4;
+            }
+            .certificate-name {
+                font-weight: bold;
+            }
+            .certificate-org {
+                color: #666;
+            }
+            .skills-category {
+                margin-bottom: 15px;
+            }
+            .skills-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                border-left: 3px solid #4682b4;
+                padding-left: 10px;
+            }
+            .skills-level {
+                color: #666;
+            }
+            .skills-items {
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="resume-container">
+            <div class="header">
+                <div class="europass-logo"></div>
+                <div class="resume-title">个人简历</div>
+            </div>
+
+            <div class="section">
+                <div class="personal-info-title">个人信息</div>
+                <div class="personal-info-content">
+                    <div class="avatar">
+                        <img
+                            th:src="@{${persion.picture}}"
+                            src="https://randomuser.me/api/portraits/men/75.jpg"
+                            alt="头像"
+                        />
+                    </div>
+                    <div class="name" th:text="${persion.fullName}">
+                        John.Doe
+                    </div>
+                    <div class="job-title" th:text="${persion.jobTitle}">
+                        富有创造力和创新精神的 Web 开发人员
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            居住地：<span th:text="${persion.address}"
+                                >加利福尼亚州 94158</span
+                            >
+                        </div>
+                        <div class="contact-item">
+                            电话：<span th:text="${persion.phone}"
+                                >13111112222</span
+                            >
+                        </div>
+                        <div class="contact-item">
+                            邮箱：<span th:text="${persion.email}"
+                                >john.doe@gmail.com</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="personal-info-title">个人信息</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <table class="info-table">
+                        <tr>
+                            <td>出生年月：</td>
+                            <td th:text="${persion.dateOfBirth}">2000-01-01</td>
+                            <td>性别：</td>
+                            <td th:text="${persion.gender}">男</td>
+                        </tr>
+                        <tr>
+                            <td>薪资要求：</td>
+                            <td th:text="${persion.salaryExpectation}">18K</td>
+                            <td>期望工作城市：</td>
+                            <td th:text="${persion.desiredWorkCity}">长沙</td>
+                        </tr>
+                        <tr>
+                            <td>求职状态：</td>
+                            <td th:text="${persion.jobSeekingStatus}">
+                                正在求职
+                            </td>
+                            <td>政治面貌：</td>
+                            <td th:text="${persion.politicalAffiliation}">
+                                党员
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">个人总结</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div class="summary" th:utext="${persion.summary}">
+                        拥有 5
+                        年经验的创新型网页开发者，擅长构建具有影响力且用户体验良好的网站和应用程序。精通前端技术，热衷于遵循现代网页标准和采用前沿开发技术。有成功带领项目从构思到部署的可靠记录。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">工作经历</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div
+                        class="experience-item"
+                        th:each="exp,iterStat : ${experience}"
+                    >
+                        <div
+                            class="experience-date"
+                            th:text="${exp.startDate} + ' 至 ' + (${exp.endDate} == null ? '今' : ${exp.endDate})"
+                        >
+                            2019 年 1 月至今
+                        </div>
+                        <div class="company-name" th:text="${exp.companyName}">
+                            创意解决方案公司
+                        </div>
+                        <div class="job-position" th:text="${exp.jobTitle}">
+                            创意与创新型网页开发者
+                        </div>
+                        <div class="job-location" th:text="${exp.location}">
+                            湖南长沙
+                        </div>
+                        <ul class="job-description-list">
+                            <li th:utext="${exp.description}">
+                                带头重新设计主要产品网站，使用户参与度提高了40%。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">教育经历</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div
+                        class="education-item"
+                        th:each="edu,iterStat : ${education}"
+                    >
+                        <div
+                            class="education-date"
+                            th:text="${edu.startDate} + '-' + ${edu.endDate}"
+                        >
+                            2012年8月-2016年5月
+                        </div>
+                        <div
+                            class="school-name"
+                            th:text="${edu.institutionName}"
+                        >
+                            加利福尼亚大学伯克利分校
+                        </div>
+                        <div
+                            class="degree"
+                            th:text="${edu.major} + ' ' + ${edu.degree}"
+                        >
+                            计算机科学学士学位
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">项目</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div
+                        class="project-item"
+                        th:each="proj,iterStat : ${projects}"
+                    >
+                        <div
+                            class="project-title"
+                            th:text="${proj.projectName}"
+                        >
+                            电子商务平台
+                        </div>
+                        <div class="project-role" th:text="${proj.role}">
+                            项目负责人
+                        </div>
+                        <div
+                            class="project-description"
+                            th:text="${proj.description}"
+                        >
+                            主导开发全栈电商平台，提升销售转化率25%。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">证书</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div
+                        class="certificate-item"
+                        th:each="cert,iterStat : ${certifications}"
+                    >
+                        <div
+                            class="certificate-year"
+                            th:text="${cert.issueDate}"
+                        >
+                            2020
+                        </div>
+                        <div
+                            class="certificate-name"
+                            th:text="${cert.certificationName}"
+                        >
+                            全栈开发
+                        </div>
+                        <div class="certificate-org">代码学院</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">技能</div>
+                <div class="section-content">
+                    <div
+                        style="
+                            position: relative;
+                            width: 100%;
+                            height: 20px;
+                            margin: 10px 0;
+                            top: -8px;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0px;
+                                height: 2px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                        <div
+                            style="
+                                position: absolute;
+                                top: 32%;
+                                right: 0;
+                                width: 10px;
+                                height: 10px;
+                                background-color: #4682b4;
+                                transform: translateY(-50%);
+                            "
+                        ></div>
+                    </div>
+                    <div class="summary" th:each="obj,iterStat : ${skills}">
+                        <span th:text="${obj.skillName}"> 网络技术</span>
+                        <span
+                            class="skills-level"
+                            th:utext="${obj.skillKeywords}"
+                            >HTML5, JavaScript, PHP, Python</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -159,7 +159,7 @@
                                     mode="widthFix"
                                 />
                             </div>
-                            <!-- <div class="name">产品锦鲤简历</div> -->
+                            <div class="name">{{ item.key }}</div>
                             <!-- <div class="time">2025-10-15 编辑</div> -->
                         </div>
                     </div>
@@ -1863,7 +1863,7 @@
     });
     const tempName = computed(() => selectedTemplate.value.key);
     const reCreatePdf = async () => {
-        return;
+        // return;
         const res = await service.getPdfSrc({
             uid: userStore.userInfo.uid,
             tempName: tempName.value,
@@ -2035,9 +2035,9 @@
         }
     ]);
     const pickTem = (item) => {
-        if (recordItem.value?.downloadPdfUrl) {
-            return toast("已生成简历，不可修改模板");
-        }
+        // if (recordItem.value?.downloadPdfUrl) {
+        //     return toast("已生成简历，不可修改模板");
+        // }
         for (let v of temList.value) {
             v.isPick = false;
         }

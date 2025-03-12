@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>个人简历</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Microsoft YaHei", "SimSun", sans-serif;
+            }
+            body {
+                width: 100%;
+                background-color: #fff;
+                color: #333;
+            }
+            .resume-container {
+                width: 800px;
+                margin: 0 auto;
+                background-color: #fff;
+                border: 1px solid #ccc;
+            }
+            .header {
+                text-align: center;
+                padding: 20px 0;
+                padding-bottom: 0px;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto 10px;
+                overflow: hidden;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+            }
+            .name {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .title {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 15px;
+            }
+            .contact-info {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .contact-item {
+                display: inline-block;
+                margin: 0 10px;
+                font-size: 14px;
+            }
+            .contact-item i {
+                margin-right: 5px;
+                color: #333;
+            }
+            .personal-info {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+            .personal-info-item {
+                display: inline-block;
+                margin: 0 10px;
+            }
+            .section {
+                padding: 0px 30px;
+                padding-bottom: 0px;
+            }
+            .section-title {
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 15px;
+                position: relative;
+            }
+            .section-title:after {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: #ccc;
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+            }
+            .summary {
+                line-height: 1.6;
+                text-indent: 2em;
+                margin-bottom: 10px;
+            }
+            .experience {
+                margin-bottom: 20px;
+            }
+            .company-row {
+                overflow: hidden;
+                margin-bottom: 5px;
+            }
+            .company-name {
+                float: left;
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .job-title {
+                float: left;
+                margin-left: 10px;
+                font-size: 14px;
+            }
+            .job-date {
+                float: right;
+                font-size: 14px;
+            }
+            .job-location {
+                clear: both;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            .job-description {
+                font-size: 14px;
+                margin-bottom: 5px;
+                position: relative;
+                padding-left: 15px;
+            }
+            .job-description:before {
+                content: "•";
+                position: absolute;
+                left: 0;
+            }
+            .education {
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+            .school-name {
+                float: left;
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .school-location {
+                float: left;
+                margin-left: 10px;
+                font-size: 14px;
+            }
+            .education-date {
+                float: right;
+                font-size: 14px;
+            }
+            .degree {
+                clear: both;
+                font-size: 14px;
+            }
+            .project {
+                margin-bottom: 15px;
+            }
+            .project-title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .project-role {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            .skills-container {
+                overflow: hidden;
+            }
+            .skills-column {
+                float: left;
+                width: 33.33%;
+            }
+            .skills-category {
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            .skills-list {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            .certification {
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+            .certification-name {
+                float: left;
+                font-size: 14px;
+            }
+            .certification-year {
+                float: right;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="resume-container">
+            <div class="header">
+                <div class="avatar">
+                    <img
+                        th:src="@{${persion.picture}}"
+                        src="https://randomuser.me/api/portraits/men/75.jpg"
+                        alt="头像"
+                    />
+                </div>
+                <div class="name" th:text="${persion.fullName}">John.Doe</div>
+                <div class="title" th:text="${persion.jobTitle}">
+                    富有创造力和创新精神的 Web 开发人员
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span th:text="${persion.address}"
+                            >欢乐谷, 加利福尼亚州 94158</span
+                        >
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span th:text="${persion.phone}">13111112222</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span th:text="${persion.email}"
+                            >john.doe@gmail.com</span
+                        >
+                    </div>
+                </div>
+
+                <div class="personal-info">
+                    <div class="personal-info-item">
+                        出生日期:
+                        <span th:text="${persion.dateOfBirth}">2000-01-01</span>
+                    </div>
+                    <div class="personal-info-item">
+                        性别: <span th:text="${persion.gender}">男</span>
+                    </div>
+                    <div class="personal-info-item">
+                        薪资要求:
+                        <span th:text="${persion.expectedSalary}">18K</span>
+                    </div>
+                    <div class="personal-info-item">
+                        期望工作地点:
+                        <span th:text="${persion.desiredWorkCity}">长沙</span>
+                    </div>
+                    <div class="personal-info-item">
+                        求职状态:
+                        <span th:text="${persion.jobSeekingStatus}">在职</span>
+                    </div>
+                    <div class="personal-info-item">
+                        政治面貌:
+                        <span th:text="${persion.politicalAffiliation}"
+                            >党员</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">个人总结</h2>
+                <div class="summary" th:utext="${persion.summary}">
+                    拥有 5
+                    年经验的创新型网页开发者，擅长构建具有影响力且用户体验良好的网站和应用程序。精通前端技术，热衷于遵循现代网页标准和采用前沿开发技术。有成功带领项目从构思到部署的可靠记录。
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+
+                <div class="experience" th:each="exp,iterStat : ${experience}">
+                    <div class="company-row">
+                        <div class="company-name" th:text="${exp.companyName}">
+                            创意解决方案公司
+                        </div>
+                        <div class="job-title" th:text="${exp.jobTitle}">
+                            创意与创新型网页开发者
+                        </div>
+                        <div class="job-date">
+                            <span th:text="${exp.startDate}">2019 年 1 月</span
+                            >至<span th:if="${exp.endDate} == null">今</span
+                            ><span
+                                th:if="${exp.endDate} != null"
+                                th:text="${exp.endDate}"
+                            ></span>
+                        </div>
+                    </div>
+                    <div class="job-location" th:text="${exp.location}">
+                        湖南长沙
+                    </div>
+                    <div class="job-description" th:utext="${exp.description}">
+                        带头重新设计主要产品网站，使用户参与度提高了40%。
+                    </div>
+                    <div
+                        class="job-description"
+                        th:if="${exp.description2 != null}"
+                        th:utext="${exp.description2}"
+                    >
+                        开发并实施了新的响应框架，提高了跨设备兼容性。
+                    </div>
+                    <div
+                        class="job-description"
+                        th:if="${exp.description3 != null}"
+                        th:utext="${exp.description3}"
+                    >
+                        指导由四名初级开发人员组成的团队，培养卓越的技术文化。
+                    </div>
+                </div>
+
+                <div class="experience">
+                    <div class="company-row">
+                        <div class="company-name">技术先锋公司</div>
+                        <div class="job-title">Web开发人员</div>
+                        <div class="job-date">2016 年 6 月至 2018 年 12 月</div>
+                    </div>
+                    <div class="job-location">加利福尼亚州圣何塞</div>
+                    <div class="job-description">
+                        在一个 10 人团队中协作，使用 React.js 和 Node.js
+                        开发高质量的 web 应用程序。
+                    </div>
+                    <div class="job-description">
+                        管理第三方服务的集成，如支付的 Stripe 和短信服务的
+                        Twilio。
+                    </div>
+                    <div class="job-description">
+                        优化的应用程序性能，实现了减少30%的加载时间。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">教育</h2>
+
+                <div class="education" th:each="edu,iterStat : ${education}">
+                    <div class="school-name" th:text="${edu.institutionName}">
+                        加州大学
+                    </div>
+                    <div class="school-location" th:text="${edu.location}">
+                        加州伯克利
+                    </div>
+                    <div class="education-date">
+                        <span th:text="${edu.startDate}">2012 年 8 月</span
+                        >至<span th:text="${edu.endDate}">2016 年 5 月</span>
+                    </div>
+                    <div class="degree">
+                        <span th:text="${edu.major}">计算机科学</span>
+                        <span th:text="${edu.degree}">学士学位</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">项目</h2>
+
+                <div class="project" th:each="proj,iterStat : ${projects}">
+                    <div class="project-title" th:text="${proj.projectName}">
+                        电子商务平台
+                    </div>
+                    <div class="project-role" th:text="${proj.role}">
+                        项目负责人
+                    </div>
+                    <div class="job-description" th:text="${proj.description}">
+                        主导开发全栈电商平台，提升销售转化率25%。
+                    </div>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">交互式仪表板</div>
+                    <div class="project-role">前端开发人员</div>
+                    <div class="job-description">
+                        为 SaaS
+                        应用程序创建了一个交互式分析仪表板，增强了客户的数据可视化能力。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">证书</h2>
+
+                <div
+                    class="certification"
+                    th:each="cert,iterStat : ${certifications}"
+                >
+                    <div
+                        class="certification-name"
+                        th:text="${cert.certificationName}"
+                    >
+                        全栈开发
+                    </div>
+                    <div class="certification-year" th:text="${cert.issueDate}">
+                        2020
+                    </div>
+                </div>
+
+                <div class="certification">
+                    <div class="certification-name">AWS 认证开发人员</div>
+                    <div class="certification-year">2019</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">技能</h2>
+
+                <div class="skills-container">
+                    <div class="skills-column">
+                        <div class="skills-category">网络技术</div>
+                        <div
+                            class="skills-list"
+                            th:text="${skills[0].skillKeywords}"
+                        >
+                            精通 HTML5, JavaScript, PHP, Python
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <div class="skills-category">Web 框架</div>
+                        <div
+                            class="skills-list"
+                            th:text="${skills[1].skillKeywords}"
+                        >
+                            中级 React.js, Angular, Vue.js, Laravel, Django
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <div class="skills-category">工具</div>
+                        <div
+                            class="skills-list"
+                            th:text="${skills[2].skillKeywords}"
+                        >
+                            中级 Webpack, Git, Jenkins, Docker, JIRA
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

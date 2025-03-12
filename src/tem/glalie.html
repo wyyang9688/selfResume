@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>个人简历</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Microsoft YaHei", "SimHei", "SimSun", sans-serif;
+            }
+            body {
+                width: 100%;
+                background-color: #e0f2f1;
+            }
+            .resume-container {
+                width: 800px;
+                margin: 0 auto;
+                background-color: #fff;
+                border: 1px solid #2da298;
+                height: fit-content;
+                min-height: 820px;
+                position: relative; /* 添加相对定位 */
+            }
+            .left-sidebar {
+                float: left;
+                width: 35%;
+                background-color: #e0f2f1;
+                padding: 15px;
+                position: absolute; /* 使用绝对定位 */
+                top: 0;
+                bottom: 0; /* 延伸到容器底部 */
+                left: 0;
+                min-height: 100vh;
+            }
+            .right-content {
+                float: left;
+                width: 65%;
+                padding: 20px;
+                margin-left: 35%; /* 添加左边距，与左侧栏宽度相同 */
+            }
+            .avatar-container {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .avatar {
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+                overflow: hidden;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+            }
+            .name-title {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .name {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .title {
+                font-size: 14px;
+                color: #333;
+            }
+            .contact-info {
+                margin-bottom: 20px;
+                border: 1px solid #2da298;
+                padding: 20px;
+            }
+            .contact-item {
+                margin-bottom: 8px;
+                font-size: 14px;
+                white-space: nowrap;
+            }
+            .contact-item i {
+                width: 20px;
+                color: #2da298;
+                margin-right: 5px;
+            }
+            .section {
+                margin-bottom: 25px;
+            }
+            .section-title {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #000;
+                border-bottom: 1px solid #2da298;
+                padding-bottom: 5px;
+            }
+            .personal-info-item {
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            .personal-info-label {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+            .skills-list {
+                list-style: none;
+            }
+            .skill-category {
+                margin-bottom: 10px;
+            }
+            .skill-category-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            .skill-items {
+                font-size: 14px;
+                color: #333;
+            }
+            .certification-item {
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+            .certification-year {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+            .summary {
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+            .section-header {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #000;
+                padding-bottom: 5px;
+            }
+            .experience-item {
+                margin-bottom: 20px;
+            }
+            .company-name {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .job-title {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .job-location {
+                font-size: 14px;
+                color: #333;
+                float: right;
+            }
+            .job-date {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 10px;
+                float: right;
+            }
+            .job-header {
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+            .job-header-left {
+                float: left;
+                width: 60%;
+            }
+            .job-header-right {
+                float: right;
+                width: 40%;
+                text-align: right;
+            }
+            .job-description {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 5px;
+                position: relative;
+                padding-left: 15px;
+            }
+            .job-description:before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: #333;
+            }
+            .education-item {
+                margin-bottom: 15px;
+            }
+            .school-name {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .degree {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .education-date {
+                font-size: 14px;
+                color: #333;
+            }
+            .project-item {
+                margin-bottom: 15px;
+            }
+            .project-title {
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .project-role {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .project-description {
+                font-size: 14px;
+                color: #333;
+            }
+            .url-link {
+                color: #333;
+                text-decoration: none;
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+            .url-link i {
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="resume-container">
+            <div class="left-sidebar">
+                <div class="avatar-container">
+                    <div class="avatar">
+                        <img
+                            th:src="@{${persion.picture}}"
+                            src="https://randomuser.me/api/portraits/men/75.jpg"
+                            alt="头像"
+                        />
+                    </div>
+                </div>
+                <div class="name-title">
+                    <div class="name" th:text="${persion.fullName}">李先生</div>
+                    <div class="title" th:text="${persion.jobTitle}">
+                        富有创意和创新精神的Web开发人员
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-male"></i>
+                        <span th:text="${persion.gender}">男</span>
+                        <span th:text="${persion.dateOfBirth}">2020-01-01</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span th:text="${persion.phone}">13711111115</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span th:text="${persion.email}"
+                            >john.doe@gmail.com</span
+                        >
+                    </div>
+                    <!--  <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <a
+                            class="url-link"
+                            th:href="${persion.website}"
+                            href="https://johndoe.me/"
+                            >https://johndoe.me/</a
+                        >
+                    </div> -->
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">求职意向</h2>
+                    <div class="personal-info-item">
+                        <span class="personal-info-label">期望职位:</span>
+                        <span th:text="${persion.jobTitle}">Web开发</span>
+                    </div>
+                    <div class="personal-info-item">
+                        <span class="personal-info-label">意向城市:</span>
+                        <span th:text="${persion.desiredWorkCity}">北京</span>
+                    </div>
+                    <div class="personal-info-item">
+                        <span class="personal-info-label">薪资要求:</span>
+                        <span th:text="${persion.salaryExpectation}">1W</span>
+                    </div>
+                    <div class="personal-info-item">
+                        <span class="personal-info-label">求职状态:</span>
+                        <span th:text="${persion.jobSeekingStatus}">在职</span>
+                    </div>
+                    <div class="personal-info-item">
+                        <span class="personal-info-label">政治面貌:</span>
+                        <span th:text="${persion.politicalAffiliation}"
+                            >党员</span
+                        >
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">技能</h2>
+                    <div class="skills-list" th:each="obj,iterStat : ${skills}">
+                        <div class="skill-category">
+                            <div class="skill-category-title">
+                                <span th:text="${obj.skillName}"> 网络技术</span
+                                >:
+                            </div>
+                            <div class="skill-items">
+                                <span th:text="${obj.proficiencyLevel}"
+                                    >精通</span
+                                >
+                                <span
+                                    class="skills-level"
+                                    th:utext="${obj.skillKeywords}"
+                                    >HTML5, JavaScript, PHP, Python</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">认证</h2>
+                    <div
+                        class="certification-item"
+                        th:each="cert,iterStat : ${certifications}"
+                    >
+                        <div
+                            class="certification-year"
+                            th:text="${cert.issueDate}"
+                        >
+                            2020年
+                        </div>
+                        <div th:text="${cert.certificationName}">
+                            编程学院全栈Web开发认证
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-content">
+                <div class="section">
+                    <h2 class="section-header">总结</h2>
+                    <div class="summary">
+                        <p th:utext="${persion.summary}">
+                            拥有 5
+                            年经验的创新型网页开发者，擅长构建具有影响力且用户体验良好的网站和应用程序。精通前端技术，热衷于理解现代网络标准和采用前沿开发技术。有成功带领项目从构思到部署的可靠记录。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-header">工作经历</h2>
+                    <div
+                        class="experience-item"
+                        th:each="exp,iterStat : ${experience}"
+                    >
+                        <div class="job-header">
+                            <div class="job-header-left">
+                                <div
+                                    class="company-name"
+                                    th:text="${exp.companyName}"
+                                >
+                                    创意解决方案公司
+                                </div>
+                                <div
+                                    class="job-title"
+                                    th:text="${exp.jobTitle}"
+                                >
+                                    创意与创新型网页开发者
+                                </div>
+                            </div>
+                            <div class="job-header-right">
+                                <div class="job-date">
+                                    <span th:text="${exp.startDate}"
+                                        >2019年1月</span
+                                    >至<span th:if="${exp.endDate} == null"
+                                        >今</span
+                                    ><span
+                                        th:if="${exp.endDate} != null"
+                                        th:text="${exp.endDate}"
+                                    ></span>
+                                </div>
+                                <div
+                                    class="job-location"
+                                    th:text="${exp.location}"
+                                >
+                                    湖南长沙
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="job-description"
+                            th:utext="${exp.description}"
+                        >
+                            主导了主要产品的重新设计，使用户参与度提高了40%。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-header">教育经历</h2>
+                    <div
+                        class="education-item"
+                        th:each="edu,iterStat : ${education}"
+                    >
+                        <div class="job-header">
+                            <div class="job-header-left">
+                                <div
+                                    class="school-name"
+                                    th:text="${edu.institutionName}"
+                                >
+                                    加利福尼亚大学伯克利分校
+                                </div>
+                                <div class="degree">
+                                    <span th:text="${edu.major}"
+                                        >计算机科学</span
+                                    >
+                                    |
+                                    <span th:text="${edu.degree}"
+                                        >本科学士学位</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="job-header-right">
+                                <div class="education-date">
+                                    <span th:text="${edu.startDate}"
+                                        >2012年8月</span
+                                    >
+                                    -
+                                    <span th:text="${edu.endDate}"
+                                        >2016年5月</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-header">项目经验</h2>
+                    <div
+                        class="project-item"
+                        th:each="proj,iterStat : ${projects}"
+                    >
+                        <div
+                            class="project-title"
+                            th:text="${proj.projectName}"
+                        >
+                            电商平台重构
+                        </div>
+                        <div class="project-role" th:text="${proj.role}">
+                            全栈开发负责人
+                        </div>
+                        <div
+                            class="job-description"
+                            th:text="${proj.description}"
+                        >
+                            主导开发了一个全栈电商平台，使销售转化率提高了25%。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="section">
+                    <h2 class="section-header">兴趣爱好</h2>
+                    <div class="summary">
+                        <p th:utext="${hobbiesText}">
+                            在业余时间，我喜欢参与开源项目贡献代码，探索新的编程语言和框架。我也热爱户外活动，如徒步旅行和摄影，这些活动帮助我保持创造力和解决问题的能力。此外，我还是一名业余音乐爱好者，学习弹奏吉他已有5年时间。
+                        </p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </body>
+</html>
